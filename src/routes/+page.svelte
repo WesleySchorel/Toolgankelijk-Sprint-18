@@ -7,14 +7,16 @@
 
 	// form submit
 	let input;
-	function submit() {
+	function submitPartner() {
 		let websites = document.querySelectorAll('.website')
 
+		// check condition
 		websites.forEach(website => {
 			if(!website.innerText.toUpperCase().includes(input.toUpperCase())){
 				website.classList.add('container-off');
 			}else{
 				website.classList.remove('container-off');
+
 			}
 		});
 	}
@@ -22,7 +24,7 @@
 
 <Heading {heading} />
 
-<form on:submit|preventDefault={submit}>
+<form on:input={submitPartner}>
 	<label for="partner-search">Zoek een partner</label>
 	<input type="search" id="partner-search" placeholder="Connexxion" bind:value={input} />
 </form>
