@@ -103,6 +103,7 @@
 		top: 0;
 		display: flex;
 		flex-direction: column;
+		z-index: 100;
 	}
 
 	nav {
@@ -246,7 +247,7 @@
 
 	/* media queries for mobile */
 	@media (max-width: 640px) {
-		nav{
+		nav {
 			padding: 1.55em 1em;
 		}
 		.dropdown {
