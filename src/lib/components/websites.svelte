@@ -4,7 +4,7 @@
 	export let params;
 
 	import arrowRight from '$lib/assets/arrow_right.svg';
-	
+
 	import { onMount } from 'svelte';
 
 	let labelValue;
@@ -13,24 +13,23 @@
 	// runs after the component is first rendered to the DOM.
 	onMount(() => {
 		let random = Math.floor(Math.random() * 100);
-		
+
 		progressbar.value = random;
-		labelValue.innerHTML = random + '%'
+		labelValue.innerHTML = random + '%';
 	});
 
 	const faviconAPI =
 		'https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=';
+
+	// search, zo maakt sveltekit gebruik van de class
+	let containerOff = false;
 </script>
 
-<li>
+<li class="website" class:container-off={containerOff}>
 	<a href="{params}/{website.slug}">
 		<section class="logo-partner-section">
 			<div>
-				<img
-				height="60"
-				src="{faviconAPI}{website.url}/&size=128"
-				alt=""
-			/>
+				<img height="60" src="{faviconAPI}{website.url}/&size=128" alt="" />
 				<h2>{overzicht.titel} <span>/{website.slug}</span></h2>
 			</div>
 			<img src={arrowRight} alt="arrow right" />
@@ -67,7 +66,6 @@
 		transition: 0.25s ease;
 	}
 
-	
 	li a:hover {
 		border: solid 1px var(--c-pink);
 	}
@@ -130,5 +128,10 @@
 
 	.progress-percentage {
 		height: 85%;
+	}
+
+	/* search css */
+	.container-off {
+		display: none;
 	}
 </style>
