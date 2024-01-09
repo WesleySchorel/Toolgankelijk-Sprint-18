@@ -2,6 +2,7 @@
 	import Heading from '$lib/components/heading.svelte';
 	import Websites from '$lib/components/websites.svelte';
 	import { page } from '$app/stores';
+	import Search from '$lib/components/search.svelte';
 
 	export let data;
 
@@ -20,15 +21,7 @@
 
 <section>
 	<button>Project toevoegen</button>
-	<form>
-		<label for="partner-search">Zoek een website</label>
-		<input
-			type="search"
-			id="partner-search"
-			placeholder="Home"
-			on:input={(e) => console.log(e)}
-		/>
-	</form>
+	<Search />
 </section>
 
 <ul>
@@ -61,27 +54,6 @@
 		opacity: 0.75;
 	}
 
-	/* form */
-	form {
-		display: flex;
-		justify-content: flex-end;
-		align-items: center;
-		gap: 1em;
-		font-weight: 600;
-	}
-
-	input {
-		padding: 0.5em;
-		border: 1px solid var(--c-modal-button);
-		background-color: var(--c-container);
-		border-radius: 0.25em;
-		color: var(--c-white);
-		width: 8.5em;
-		font-size: 1em;
-		font-weight: 600;
-		padding-left: .75em;
-	}
-	/* form end */
 	ul {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));

@@ -11,26 +11,22 @@
 	// runs after the component is first rendered to the DOM.
 	onMount(() => {
 		let random = Math.floor(Math.random() * 100);
-		
+
 		progressbar.value = random;
-		labelValue.innerHTML = random + '%'
+		labelValue.innerHTML = random + '%';
 	});
 	const faviconAPI =
 		'https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=';
 
-		// search, zo maakt sveltekit gebruik van de class
-		let containerOff = false
+	// search, zo maakt sveltekit gebruik van de class
+	let containerOff = false;
 </script>
 
 <li class="website" class:container-off={containerOff}>
 	<a href={website.slug}>
 		<section class="logo-partner-section">
 			<div>
-				<img
-				height="60"
-				src="{faviconAPI}{website.homepage}/&size=128"
-				alt=""
-			/>
+				<img height="60" src="{faviconAPI}{website.homepage}/&size=128" alt="" />
 				<h2 class="name">{website.titel}</h2>
 			</div>
 			<img src={arrowRight} alt="arrow right" />
@@ -126,7 +122,7 @@
 	}
 
 	/* search css */
-	.container-off{
+	.container-off {
 		display: none;
 	}
 </style>
