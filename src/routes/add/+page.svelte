@@ -7,9 +7,9 @@
     <section class="form-container">
         <form action="">
                 <label for="name">Voeg een pagina titel toe</label>
-                <input id="name" required type="text"><br>
+                <input id="name" required type="text">
             
-                <label for="url" class="url-container">Voeg een Partner URL toe</label>
+                <label for="url" class="url-label">Voeg een Partner URL toe</label>
                 <input id="url" required type="url">
             <button class="add-button">Project Toevoegen</button>
         </form>
@@ -54,7 +54,7 @@
         text-decoration: none;
         transition: 0.3s;
         border-radius: 4px;
-        margin-top: 1em;
+        margin-top: 2em;
     }
 
     input[type=text], input[type=url] {
@@ -69,6 +69,18 @@
 
     .add-button:hover {
         opacity: 0.75;
+    }
+
+    .url-label {
+        margin-top: 1em;
+    }
+
+    form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
     }
 
 
