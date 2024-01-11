@@ -1,41 +1,60 @@
 <script>
 	export let richtlijnen;
 	export let toolboardData;
+	export let selectedNiveau = 'A';
+
+	const getSuccescriteriaByNiveau = (niveau) =>
+		toolboardData.url.checks[0]
+			? toolboardData.url.checks[0].succescriteria.filter((item) => item.niveau === niveau)
+			: [];
+
+	let filteredSuccescriteria = getSuccescriteriaByNiveau(selectedNiveau);
+
+	const handleNiveauChange = (event) => {
+		selectedNiveau = event.target.value;
+		filteredSuccescriteria = getSuccescriteriaByNiveau(selectedNiveau);
+	};
 
 	const checkedSuccescriteria = toolboardData.url.checks[0]
-		? toolboardData.url.checks[0].succescriteria
+		? toolboardData.url.checks[0].succescriteria.filter((item) => item.niveau === selectedNiveau)
 		: [];
 </script>
 
 <section>
 	<form action="">
-		<!-- For each loop voor alle verschillende richtlijnen -->
+		<label>
+			Selecteer niveau:
+			<select bind:value={selectedNiveau} on:change={handleNiveauChange}>
+				<option value="A">Niveau A</option>
+				<option value="AA">Niveau AA</option>
+				<option value="AAA">Niveau AAA</option>
+			</select>
+		</label>
+
 		{#each richtlijnen as richtlijn}
 			<article>
 				<div>
 					<span>Richtlijn {richtlijn.index}</span>
 					<h3>{richtlijn.titel}</h3>
 				</div>
-				<!-- For each loop voor alle succescriteria in de richtlijnen -->
 				{#each richtlijn.succescriteria as succescriterium}
-					<details>
-						<summary>
-							<label>
-								<div>
-									<span
-										>Criteria {succescriterium.index}
-										({succescriterium.niveau})</span
-									>
-									<h4>{succescriterium.titel}</h4>
-								</div>
-								<input
-									type="checkbox"
-									checked={checkedSuccescriteria.find((e) => e.id === succescriterium.id)}
-								/>
-							</label>
-						</summary>
-						<div class="richtlijn-uitleg">{@html richtlijn.uitleg.html}</div>
-					</details>
+					{#if succescriterium.niveau === selectedNiveau}
+						<details>
+							<summary>
+								<label>
+									<div>
+										<span>Criteria {succescriterium.index} ({succescriterium.niveau})</span>
+										<h4>{succescriterium.titel}</h4>
+									</div>
+									<input
+										type="checkbox"
+										checked={checkedSuccescriteria.find((e) => e.id === succescriterium.id)}
+									/>
+								</label>
+							</summary>
+							<div class="richtlijn-uitleg">{@html richtlijn.uitleg.html}</div>
+						</details>
+					{/if}
 				{/each}
 			</article>
 		{/each}
@@ -43,6 +62,21 @@
 </section>
 
 <style>
+	select {
+		border-radius: 0.25em;
+		padding: 0.5em 1em;
+		color: var(--c-white);
+		background-color: var(--c-modal-button);
+		border: none;
+		font-weight: 600;
+		font-size: 1em;
+		cursor: pointer;
+	}
+
+	.richtlijn-uitleg {
+		padding-left: 3rem;
+	}
+
 	section {
 		flex-basis: 0;
 		flex-grow: 999;
@@ -64,7 +98,8 @@
 
 	h3,
 	h4 {
-		font-size: 1.5em;
+		font-size: 1.2rem;
+		font-weight: 600;
 	}
 
 	span {
@@ -82,8 +117,6 @@
 	label div {
 		margin-left: 1em;
 	}
-
-	/* Accordion styling + custom arrow */
 
 	details {
 		padding: 1em;
