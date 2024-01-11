@@ -4,6 +4,7 @@
 	export let params;
 
 	import arrowRight from '$lib/assets/arrow_right.svg';
+	import dotsIcon from '$lib/assets/dots.svg';
 
 	import { onMount } from 'svelte';
 
@@ -32,7 +33,7 @@
 				<img height="60" src="{faviconAPI}{website.url}/&size=128" alt="" />
 				<h2>{overzicht.titel} <span>/{website.slug}</span></h2>
 			</div>
-			<img src={arrowRight} alt="arrow right" />
+			<img src={dotsIcon} alt="arrow right" />
 		</section>
 
 		<section class="more-info-section">
