@@ -3,6 +3,8 @@
 	export let toolboardData;
 	export let selectedNiveau = 'A';
 
+	import { onMount } from 'svelte';
+
 	const getSuccescriteriaByNiveau = (niveau) =>
 		toolboardData.url.checks[0]
 			? toolboardData.url.checks[0].succescriteria.filter((item) => item.niveau === niveau)
@@ -18,10 +20,16 @@
 	const checkedSuccescriteria = toolboardData.url.checks[0]
 		? toolboardData.url.checks[0].succescriteria.filter((item) => item.niveau === selectedNiveau)
 		: [];
+
+	onMount(() => {
+		const niveauToggle = document.querySelector('#niveau-toggle');
+		console.log(niveauToggle);
+		niveauToggle.classList.toggle("disabled")
+	});
 </script>
 
 <section>
-	<form action="">
+	<div id="niveau-toggle" class="disabled">
 		<label>
 			Selecteer niveau:
 			<select bind:value={selectedNiveau} on:change={handleNiveauChange}>
@@ -30,7 +38,9 @@
 				<option value="AAA">Niveau AAA</option>
 			</select>
 		</label>
+	</div>
 
+	<form action="">
 		{#each richtlijnen as richtlijn}
 			<article>
 				<div>
@@ -184,5 +194,9 @@
 
 	input[type='checkbox']:checked {
 		background-color: var(--c-pink);
+	}
+
+	#niveau-toggle {
+		margin-bottom: 1em;
 	}
 </style>
