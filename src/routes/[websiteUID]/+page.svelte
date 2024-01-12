@@ -34,8 +34,7 @@
 	section{
 		display: flex;
 		justify-content: space-between;
-		margin: 0 1em;
-		margin-bottom: 1em;
+		margin: 0 0 1em 1em;
 	}
 
 	button{
