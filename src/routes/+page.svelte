@@ -13,6 +13,7 @@
 
 <Search />
 
+<a href="/add">add partner</a>
 <ul>
 	{#each data.websites as website}
 		<Partner {website} />

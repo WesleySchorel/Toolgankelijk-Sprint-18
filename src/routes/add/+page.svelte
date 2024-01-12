@@ -1,3 +1,8 @@
+<script>
+    // export let form
+    // console.log(form.success)
+</script>
+
 <section class="content-container">
     <article class="tip-container">
         <p class="tip">Tip</p>
@@ -5,12 +10,12 @@
     </article>
 
     <section class="form-container">
-        <form action="">
+        <form method="POST">
                 <label for="name">Voeg een pagina titel toe</label>
-                <input id="name" required type="text">
+                <input id="name" name="name" required type="text">
             
                 <label for="url" class="url-label">Voeg een Partner URL toe</label>
-                <input id="url" required type="url">
+                <input id="url" name="url" required type="url">
             <button class="add-button">Project Toevoegen</button>
         </form>
     </section>
