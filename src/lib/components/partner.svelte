@@ -30,7 +30,7 @@
 				<img height="60" src="{faviconAPI}{website.homepage}/&size=128" alt="" />
 				<h2 class="name">{website.titel}</h2>
 			</div>
-			<img src={dotsIcon} alt="arrow right" />
+			<span />
 		</section>
 
 		<section class="more-info-section">

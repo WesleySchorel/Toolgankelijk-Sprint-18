@@ -5,7 +5,6 @@
 	export let data;
 
 	let heading = { titel: 'Partners overzicht' };
-	
 </script>
 
 <Heading {heading} />

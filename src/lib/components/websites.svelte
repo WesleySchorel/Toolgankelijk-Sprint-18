@@ -3,8 +3,8 @@
 	export let overzicht;
 	export let params;
 
-	import arrowRight from '$lib/assets/arrow_right.svg';
-	import dotsIcon from '$lib/assets/dots.svg';
+	import trash from '$lib/assets/trash.svg';
+	import pencil from '$lib/assets/pencil.svg';
 
 	import { onMount } from 'svelte';
 
@@ -24,6 +24,16 @@
 
 	// search, zo maakt sveltekit gebruik van de class
 	let containerOff = false;
+	let openedDelete = null;
+
+	function openDelete(event) {
+		event.preventDefault();
+		openedDelete = openedDelete === website.id ? null : website.id;
+	}
+
+	function closeDelete() {
+		openedDelete = null;
+	}
 </script>
 
 <li class="website" class:container-off={containerOff}>
@@ -33,7 +43,10 @@
 				<img height="60" src="{faviconAPI}{website.url}/&size=128" alt="" />
 				<h2>{overzicht.titel} <span>/{website.slug}</span></h2>
 			</div>
-			<img src={dotsIcon} alt="arrow right" />
+			<div class="icons">
+				<button><img src={pencil} alt="Verwijder icon" /></button>
+				<button on:click={openDelete}><img src={trash} alt="Verwijder icon" /></button>
+			</div>
 		</section>
 
 		<section class="more-info-section">
@@ -45,9 +58,110 @@
 			</div>
 		</section>
 	</a>
+	<div class="popup-verwijder" style="display: {openedDelete === website.id ? 'flex' : 'none'};">
+		<form action="/{overzicht.titel.toLowerCase()}">
+			<h3>Delete URL</h3>
+			<p>
+				Weet je zeker dat je <span>{website.slug}</span> wilt verwijderen uit
+				<span>{overzicht.titel}</span>? Deze actie kan niet ongedaan worden gemaakt.
+			</p>
+			<input type="text" name="id" value={website.id} id={website.id} />
+			<div>
+				<input type="submit" value="Ja" />
+				<button on:click={closeDelete}>Nee</button>
+			</div>
+		</form>
+	</div>
 </li>
 
 <style>
+	.icons {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.popup-verwijder {
+		position: absolute;
+		width: 100%;
+		height: calc(100% - 90px);
+		bottom: 0;
+		left: 0;
+		display: none;
+		background-color: #2c2c2ce8;
+		z-index: 10;
+		justify-content: center;
+		align-items: center;
+	}
+
+	form {
+		width: 500px;
+		aspect-ratio: 2/1;
+		background-color: var(--c-container);
+		border-radius: 0.5em;
+		border: solid 1px var(--c-container-stroke);
+		padding: 1em;
+		display: flex;
+		align-items: flex-start;
+		justify-content: center;
+		flex-direction: column;
+	}
+
+	form input[type='text'] {
+		visibility: hidden;
+		display: none;
+	}
+
+	form button,
+	input[type='submit'] {
+		border-radius: 0.25em;
+		padding: 0.5em 1em;
+		color: var(--c-white);
+		background-color: var(--c-modal-button);
+		border: none;
+		font-weight: 600;
+		font-size: 1em;
+		transition: 0.3s;
+		cursor: pointer;
+		width: 7.5em;
+	}
+
+	form button {
+		background-color: var(--c-pink);
+		margin-left: 0.5em;
+	}
+
+	form h3 {
+		border-bottom: 1px solid var(--c-container-stroke);
+		width: 100%;
+		padding-bottom: 5px;
+	}
+
+	form p {
+		/* font-size: 0.9em; */
+		margin: 1.5em 0;
+		font-weight: 100;
+	}
+
+	form p span {
+		display: contents;
+		color: var(--c-pink);
+	}
+
+	form button:hover,
+	input[type='submit']:hover {
+		opacity: 0.75;
+	}
+
+	a section button {
+		background: none;
+		cursor: pointer;
+		border: none;
+	}
+
+	a section button:first-child {
+		margin-right: 5px;
+	}
+
 	li {
 		display: flex;
 	}
@@ -65,6 +179,7 @@
 		border: solid 1px var(--c-container-stroke);
 		width: 100%;
 		transition: 0.25s ease;
+		position: relative;
 	}
 
 	li a:hover {
