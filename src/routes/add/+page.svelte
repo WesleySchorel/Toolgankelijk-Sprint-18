@@ -1,98 +1,109 @@
 <script>
-    // export let form
-    // console.log(form.success)
+	export let form;
+	function submitted() {
+        console.log(form.success)
+		if (form.success) {
+            alert('Partner is toegevoegd, verwijzing naar homepage in een paar seconden.');
+            setInterval( () => {
+                window.location.href = '/'
+            }, 2000)
+			
+		}else{
+            alert('Er ging wat mis, probeer het opnieuw.');
+        }
+	}
 </script>
 
 <section class="content-container">
-    <article class="tip-container">
-        <p class="tip">Tip</p>
-        <p>Voeg een bestaande url toe van de website van een partner!</p>
-    </article>
+	<article class="tip-container">
+		<p class="tip">Tip</p>
+		<p>Voeg een bestaande url toe van de website van een partner!</p>
+	</article>
 
-    <section class="form-container">
-        <form method="POST">
-                <label for="name">Voeg een pagina titel toe</label>
-                <input id="name" name="name" required type="text">
-            
-                <label for="url" class="url-label">Voeg een Partner URL toe</label>
-                <input id="url" name="url" required type="url">
-            <button class="add-button">Project Toevoegen</button>
-        </form>
-    </section>
+	<section class="form-container">
+		<form on:submit={submitted()} method="POST">
+			<label for="name">Voeg een pagina titel toe</label>
+			<input id="name" name="name" required type="text" />
+
+			<label for="url" class="url-label">Voeg een Partner URL toe</label>
+			<input id="url" name="url" required type="url" />
+			<button class="add-button">Project Toevoegen</button>
+		</form>
+	</section>
 </section>
 
 <style>
 	.content-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: flex-start;
-    }
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: flex-start;
+	}
 
-    article, .form-container {
-        background-color: var(--c-container);
-        margin: .5em;
-        border-radius: 4px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        padding: 1.2em;
-    }
+	article,
+	.form-container {
+		background-color: var(--c-container);
+		margin: 0.5em;
+		border-radius: 4px;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: flex-start;
+		padding: 1.2em;
+	}
 
-    .form-container {
-        line-height: 2em;
-        width: 100%;
-    }
+	.form-container {
+		line-height: 2em;
+		width: 100%;
+	}
 
-    .tip {
-        color: var(--c-orange);
-        line-height: 1.5em;
-    }
+	.tip {
+		color: var(--c-orange);
+		line-height: 1.5em;
+	}
 
-    .add-button {
-        border: none;
-        background-color: var(--c-modal-button);
-        color: white;
-        padding: .7em;
-        cursor: pointer;
-        text-decoration: none;
-        transition: 0.3s;
-        border-radius: 4px;
-        margin-top: 2em;
-    }
+	.add-button {
+		border: none;
+		background-color: var(--c-modal-button);
+		color: white;
+		padding: 0.7em;
+		cursor: pointer;
+		text-decoration: none;
+		transition: 0.3s;
+		border-radius: 4px;
+		margin-top: 2em;
+	}
 
-    input[type=text], input[type=url] {
-        width: 100%;
-        padding: 12px 20px;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-        max-width: 700px;
-    }
+	input[type='text'],
+	input[type='url'] {
+		width: 100%;
+		padding: 12px 20px;
+		display: inline-block;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		box-sizing: border-box;
+		max-width: 700px;
+	}
 
-    .add-button:hover {
-        opacity: 0.75;
-    }
+	.add-button:hover {
+		opacity: 0.75;
+	}
 
-    .url-label {
-        margin-top: 1em;
-    }
+	.url-label {
+		margin-top: 1em;
+	}
 
-    form {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-    }
+	form {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: flex-start;
+	}
 
-
-    @media (max-width: 850px) {
-        .content-container {
-            flex-wrap: wrap;
-        }
-    }   
-
+	@media (max-width: 850px) {
+		.content-container {
+			flex-wrap: wrap;
+		}
+	}
 </style>
