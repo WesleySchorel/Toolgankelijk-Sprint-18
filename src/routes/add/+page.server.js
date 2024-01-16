@@ -16,9 +16,11 @@ export const actions = {
     const formData = await request.formData();
     const name = formData.get('name')
     const url = formData.get('url');
-
+    // slugs moeten lowercase sinds het uniek is
+    const slug = name.toLowerCase()
+    
     try {
-      let query = getQueryAddPartner(gql, name, url)
+      let query = getQueryAddPartner(gql, name, url, slug)
       let hygraphCall = await hygraph.request(query)
 
       return {
