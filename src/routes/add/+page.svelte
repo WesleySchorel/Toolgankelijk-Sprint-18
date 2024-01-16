@@ -17,17 +17,17 @@
 <section class="content-container">
 	<article class="tip-container">
 		<p class="tip">Tip</p>
-		<p>Voeg een bestaande url toe van de website van een partner!</p>
+		<p>Probeer een partner toe te voegen die nog niet in de lijst bestaat!</p>
 	</article>
 
 	<section class="form-container">
 		<form on:submit={submitted()} method="POST">
-			<label for="name">Voeg een pagina titel toe</label>
+			<label for="name">Voeg een partner titel toe</label>
 			<input id="name" name="name" required type="text" />
 
-			<label for="url" class="url-label">Voeg een Partner URL toe</label>
+			<label for="url" class="url-label">Voeg een Partner homepagina URL toe</label>
 			<input id="url" name="url" required type="url" />
-			<button class="add-button">Project Toevoegen</button>
+			<button class="add-button">Partner toevoegen</button>
 		</form>
 	</section>
 </section>
