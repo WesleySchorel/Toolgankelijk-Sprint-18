@@ -7,7 +7,7 @@ export default function getQueryAddPartner(gql, name, url, slug) {
       homepage
       slug
     }
-    publishWebsite(where: {slug: "${name}"}) {
+    publishWebsite(where: {slug: "${slug}"}) {
       id
       titel
     }
