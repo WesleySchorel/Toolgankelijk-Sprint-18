@@ -1,15 +1,15 @@
 <script>
 	export let form;
+	
 	function submitted() {
-        console.log(form.success)
-		if (form.success) {
-            alert(form.message);
-            setInterval( () => {
+		if (form?.success) {
+            alert(form?.message);
+            setTimeout( () => {
                 window.location.href = '/'
             }, 1000)
 			
-		}else{
-            alert(form.message);
+		}else if(form?.success == false){
+            alert(form?.message);
         }
 	}
 </script>
