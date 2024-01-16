@@ -34,6 +34,17 @@
 	function closeDelete() {
 		openedDelete = null;
 	}
+
+	function submitted() {
+		if (form?.success) {
+			alert(form?.message);
+			setTimeout(() => {
+				window.location.href = '/';
+			}, 1000);
+		} else if (form?.success == false) {
+			alert(form?.message);
+		}
+	}
 </script>
 
 <li class="website" class:container-off={containerOff}>
@@ -59,7 +70,7 @@
 		</section>
 	</a>
 	<div class="popup-verwijder" style="display: {openedDelete === website.id ? 'flex' : 'none'};">
-		<form action="/{overzicht.titel.toLowerCase()}">
+		<form on:submit={submitted()} method="POST">
 			<h3>Delete URL</h3>
 			<p>
 				Weet je zeker dat je <span>{website.slug}</span> wilt verwijderen uit
