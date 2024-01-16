@@ -2,6 +2,7 @@
 	export let website;
 	export let overzicht;
 	export let params;
+	export let form;
 
 	import trash from '$lib/assets/trash.svg';
 	import pencil from '$lib/assets/pencil.svg';
@@ -32,6 +33,7 @@
 	}
 
 	function closeDelete() {
+		event.preventDefault();
 		openedDelete = null;
 	}
 
@@ -71,7 +73,7 @@
 	</a>
 	<div class="popup-verwijder" style="display: {openedDelete === website.id ? 'flex' : 'none'};">
 		<form on:submit={submitted()} method="POST">
-			<h3>Delete URL</h3>
+			<h3>Verwijder URL</h3>
 			<p>
 				Weet je zeker dat je <span>{website.slug}</span> wilt verwijderen uit
 				<span>{overzicht.titel}</span>? Deze actie kan niet ongedaan worden gemaakt.
