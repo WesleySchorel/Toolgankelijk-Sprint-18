@@ -20,20 +20,18 @@ export const actions = {
     try {
       let query = getQueryAddPartner(gql, name, url)
       let hygraphCall = await hygraph.request(query)
-      
+
       return {
         hygraphCall,
-        success: true
+        success: true,
+        message: 'Partner is toegevoegd, verwijzing naar homepage in een paar seconden.'
       }
     } catch (error) {
+      
       return {
-        body: 'something went wrong!',
+        message: 'Er ging wat mis, probeer het opnieuw.',
         success: false
       }
     }
-    // return await hygraph.request(query)
-
-    // Process the form data and perform actions
-    // return { success: "gepost!" };
   },
 };

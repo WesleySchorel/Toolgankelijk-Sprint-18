@@ -3,13 +3,13 @@
 	function submitted() {
         console.log(form.success)
 		if (form.success) {
-            alert('Partner is toegevoegd, verwijzing naar homepage in een paar seconden.');
+            alert(form.message);
             setInterval( () => {
                 window.location.href = '/'
-            }, 2000)
+            }, 1000)
 			
 		}else{
-            alert('Er ging wat mis, probeer het opnieuw.');
+            alert(form.message);
         }
 	}
 </script>
