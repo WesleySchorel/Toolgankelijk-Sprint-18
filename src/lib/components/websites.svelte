@@ -28,6 +28,12 @@
 	let openedDelete = null;
 	let openedEdit = null;
 
+	// Last updated tijd berekent door de huidige tijd van de updated tijd af te halen.
+	const updatedTime = new Date(website.updatedAt);
+	const currentTime = new Date();
+	const timeDifference = Math.floor((currentTime - updatedTime) / (60 * 1000)); // Verschil in minuten
+	const lastTime = timeDifference > 0 ? `${timeDifference} min ago` : 'Just now';
+
 	function openDelete(event) {
 		event.preventDefault();
 		openedDelete = openedDelete === website.id ? null : website.id;
@@ -58,6 +64,8 @@
 			alert(form?.message);
 		}
 	}
+
+	console.log(website);
 </script>
 
 <li class="website" class:container-off={containerOff}>
@@ -74,7 +82,7 @@
 		</section>
 
 		<section class="more-info-section">
-			<span>Laatst bewerkt: 12 min. geleden</span>
+			<span>Laatst bewerkt: {lastTime}</span>
 
 			<div class="progress-container">
 				<progress id="progress-partner" max="100" value="0" bind:this={progressbar} />
@@ -152,7 +160,7 @@
 		border-radius: 0.25em;
 		padding: 0.5em 1em;
 		color: var(--c-white);
-		background-color: var(--c-modal-button);
+		background-color: var(--c-pink);
 		border: none;
 		font-weight: 600;
 		font-size: 1em;
@@ -187,7 +195,7 @@
 	}
 
 	form button {
-		background-color: var(--c-pink);
+		background-color: var(--c-modal-button);
 		margin-left: 0.5em;
 	}
 
@@ -206,6 +214,8 @@
 	form p span {
 		display: contents;
 		color: var(--c-pink);
+		font-weight: 900;
+		text-transform: uppercase;
 	}
 
 	form button:hover,

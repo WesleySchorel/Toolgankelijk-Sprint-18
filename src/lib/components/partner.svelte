@@ -1,13 +1,15 @@
 <script>
 	export let website;
 
-	import arrowRight from '$lib/assets/arrow_right.svg';
-	import dotsIcon from '$lib/assets/dots.svg';
-
 	import { onMount } from 'svelte';
 
 	let labelValue;
 	let progressbar;
+
+	const updatedTime = new Date(website.updatedAt);
+	const currentTime = new Date();
+	const timeDifference = Math.floor((currentTime - updatedTime) / (60 * 1000)); // Verschil in minuten
+	const lastTime = timeDifference > 0 ? `${timeDifference} min ago` : 'Just now';
 
 	// runs after the component is first rendered to the DOM.
 	onMount(() => {
@@ -34,7 +36,7 @@
 		</section>
 
 		<section class="more-info-section">
-			<span>Laatst bewerkt: 12 min. geleden</span>
+			<span>Laatst bewerkt: {lastTime}</span>
 
 			<div class="progress-container">
 				<progress id="progress-partner" max="100" value="0" bind:this={progressbar} />

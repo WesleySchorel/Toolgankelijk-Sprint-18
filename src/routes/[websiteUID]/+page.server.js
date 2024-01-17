@@ -17,7 +17,7 @@ export const actions = {
 		const formData = await request.formData();
 		const id = formData.get('id');
 
-		console.log(id);
+		// console.log(id);
 
 		let query = getQueryDeleteUrl(gql, id);
 		return await hygraph.request(query);
@@ -28,7 +28,7 @@ export const actions = {
 		const slug = formData.get('slug');
 		const url = formData.get('url');
 
-		console.log(id, slug, url);
+		// console.log(id, slug, url);
 
 		let query = getQueryUpdateUrl(gql, slug, url, id);
 		return await hygraph.request(query);
