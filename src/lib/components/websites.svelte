@@ -26,15 +26,26 @@
 	// search, zo maakt sveltekit gebruik van de class
 	let containerOff = false;
 	let openedDelete = null;
+	let openedEdit = null;
 
 	function openDelete(event) {
 		event.preventDefault();
 		openedDelete = openedDelete === website.id ? null : website.id;
 	}
 
-	function closeDelete() {
+	function closeDelete(event) {
 		event.preventDefault();
 		openedDelete = null;
+	}
+
+	function openEdit(event) {
+		event.preventDefault();
+		openedEdit = openedEdit === website.id ? null : website.id;
+	}
+
+	function closeEdit(event) {
+		event.preventDefault();
+		openedEdit = null;
 	}
 
 	function submitted() {
@@ -57,7 +68,7 @@
 				<h2>{overzicht.titel} <span>/{website.slug}</span></h2>
 			</div>
 			<div class="icons">
-				<button><img src={pencil} alt="Verwijder icon" /></button>
+				<button on:click={openEdit}><img src={pencil} alt="Verwijder icon" /></button>
 				<button on:click={openDelete}><img src={trash} alt="Verwijder icon" /></button>
 			</div>
 		</section>
@@ -72,16 +83,28 @@
 		</section>
 	</a>
 	<div class="popup-verwijder" style="display: {openedDelete === website.id ? 'flex' : 'none'};">
-		<form on:submit={submitted()} method="POST">
+		<form on:submit={submitted()} action="?/deletePost" method="POST">
 			<h3>Verwijder URL</h3>
 			<p>
 				Weet je zeker dat je <span>{website.slug}</span> wilt verwijderen uit
 				<span>{overzicht.titel}</span>? Deze actie kan niet ongedaan worden gemaakt.
 			</p>
-			<input type="text" name="id" value={website.id} id={website.id} />
+			<input class="slug-field" type="text" name="id" value={website.id} id={website.id} />
 			<div>
 				<input type="submit" value="Ja" />
 				<button on:click={closeDelete}>Nee</button>
+			</div>
+		</form>
+	</div>
+	<div class="popup-edit" style="display: {openedEdit === website.id ? 'flex' : 'none'};">
+		<form on:submit={submitted()} action="?/editPost" method="POST">
+			<h3>Pas URL aan</h3>
+			<input type="text" name="slug" value={website.slug} />
+			<input type="url" name="url" value={website.url} />
+			<input class="slug-field" type="text" name="id" value={website.id} id={website.id} />
+			<div>
+				<input type="submit" value="Ja" />
+				<button on:click={closeEdit}>Nee</button>
 			</div>
 		</form>
 	</div>
@@ -93,7 +116,8 @@
 		justify-content: space-between;
 	}
 
-	.popup-verwijder {
+	.popup-verwijder,
+	.popup-edit {
 		position: absolute;
 		width: 100%;
 		height: calc(100% - 90px);
@@ -119,7 +143,7 @@
 		flex-direction: column;
 	}
 
-	form input[type='text'] {
+	.slug-field {
 		visibility: hidden;
 		display: none;
 	}

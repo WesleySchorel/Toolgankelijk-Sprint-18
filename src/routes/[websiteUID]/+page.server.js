@@ -3,6 +3,7 @@ import { hygraph } from '$lib/utils/hygraph.js';
 
 import getQueryWebsite from '$lib/queries/website';
 import getQueryDeleteUrl from '$lib/queries/deleteUrl';
+import getQueryUpdateUrl from '$lib/queries/updateUrl';
 
 export async function load({ params }) {
 	const { websiteUID } = params;
@@ -12,7 +13,7 @@ export async function load({ params }) {
 }
 
 export const actions = {
-	default: async ({ request }) => {
+	deletePost: async ({ request }) => {
 		const formData = await request.formData();
 		const id = formData.get('id');
 
@@ -20,8 +21,16 @@ export const actions = {
 
 		let query = getQueryDeleteUrl(gql, id);
 		return await hygraph.request(query);
+	},
+	editPost: async ({ request }) => {
+		const formData = await request.formData();
+		const id = formData.get('id');
+		const slug = formData.get('slug');
+		const url = formData.get('url');
 
-		// Process the form data and perform actions
-		return { success: 'Verwijdert!' };
+		console.log(id, slug, url);
+
+		let query = getQueryUpdateUrl(gql, slug, url, id);
+		return await hygraph.request(query);
 	}
 };
