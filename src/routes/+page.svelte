@@ -11,7 +11,7 @@
 <Heading {heading} />
 
 <section>
-	<a href="/add">Partner toevoegen</a>
+	<a href="/addPartner">Partner toevoegen</a>
 	<Search />
 </section>
 
