@@ -18,13 +18,12 @@
 	};
 
 	const checkedSuccescriteria = toolboardData.url.checks[0]
-		? toolboardData.url.checks[0].succescriteria.filter((item) => item.niveau === selectedNiveau)
+		? toolboardData.url.checks[0].succescriteria
 		: [];
-
 	onMount(() => {
 		const niveauToggle = document.querySelector('#niveau-toggle');
 		console.log(niveauToggle);
-		niveauToggle.classList.toggle("disabled")
+		niveauToggle.classList.toggle('disabled');
 	});
 </script>
 
