@@ -89,7 +89,7 @@
 				Weet je zeker dat je <span>{website.slug}</span> wilt verwijderen uit
 				<span>{overzicht.titel}</span>? Deze actie kan niet ongedaan worden gemaakt.
 			</p>
-			<input class="slug-field" type="text" name="id" value={website.id} id={website.id} />
+			<input class="id-field" type="text" name="id" value={website.id} id={website.id} />
 			<div>
 				<input type="submit" value="Ja" />
 				<button on:click={closeDelete}>Nee</button>
@@ -99,9 +99,13 @@
 	<div class="popup-edit" style="display: {openedEdit === website.id ? 'flex' : 'none'};">
 		<form on:submit={submitted()} action="?/editPost" method="POST">
 			<h3>Pas URL aan</h3>
-			<input type="text" name="slug" value={website.slug} />
-			<input type="url" name="url" value={website.url} />
-			<input class="slug-field" type="text" name="id" value={website.id} id={website.id} />
+			<div class="fields-container">
+				<label for="slug">Slug</label>
+				<input type="text" name="slug" id="slug" value={website.slug} />
+				<label for="url">URL</label>
+				<input type="url" name="url" id="url" value={website.url} />
+			</div>
+			<input class="id-field" type="text" name="id" value={website.id} id={website.id} />
 			<div>
 				<input type="submit" value="Ja" />
 				<button on:click={closeEdit}>Nee</button>
@@ -143,11 +147,6 @@
 		flex-direction: column;
 	}
 
-	.slug-field {
-		visibility: hidden;
-		display: none;
-	}
-
 	form button,
 	input[type='submit'] {
 		border-radius: 0.25em;
@@ -160,6 +159,31 @@
 		transition: 0.3s;
 		cursor: pointer;
 		width: 7.5em;
+	}
+
+	.fields-container {
+		margin: 1.5em 0;
+	}
+
+	input[type='text'],
+	input[type='url'] {
+		width: 100%;
+		padding: 12px 10px;
+		display: inline-block;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		box-sizing: border-box;
+		max-width: 700px;
+		margin-top: 5px;
+	}
+
+	form input[type='text'] {
+		margin-bottom: 1em;
+	}
+
+	form .id-field {
+		visibility: hidden;
+		display: none;
 	}
 
 	form button {
