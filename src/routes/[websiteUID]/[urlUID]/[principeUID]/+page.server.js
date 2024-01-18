@@ -6,6 +6,7 @@ import getQueryUrl from '$lib/queries/url';
 import getQueryToolboard from '$lib/queries/toolboard';
 import firstCheck from '$lib/queries/firstCheck'
 import addCheck from '$lib/queries/addCheck'
+import deleteCheck from '$lib/queries/deleteCheck'
 
 import { error } from '@sveltejs/kit';
 
@@ -72,6 +73,7 @@ export const actions = {
 			savedCheckedSuccescriteria.forEach(savedCheckedSuccescriterium => {
 				if (!clientCheckedSuccesscriteria.find(obj => obj === savedCheckedSuccescriterium.id)) {
 					console.log(savedCheckedSuccescriterium.id + " is being removed...")
+					deleteCheckFromList(savedCheckedSuccescriterium.id)
 				}
 			})
 
@@ -95,6 +97,26 @@ export const actions = {
 
 				return {
 					addCheckId,
+					success: true,
+				}
+
+			} catch (error) {
+				console.log(error)
+				return {
+					success: false,
+				}
+			}
+		}
+
+		async function deleteCheckFromList(succescriteriumId) {
+			try {
+				let getFirstCheckId = (await getFirstCheck()).firstCheckId;
+
+				let deleteCheckQuery = deleteCheck(gql, websiteUID, urlUID, getFirstCheckId, succescriteriumId)
+				let deleteCheckId = await hygraph.request(deleteCheckQuery)
+
+				return {
+					deleteCheckId,
 					success: true,
 				}
 
