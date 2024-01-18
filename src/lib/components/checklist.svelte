@@ -5,6 +5,8 @@
 
 	import { onMount } from 'svelte';
 
+	// console.log(toolboardData)
+
 	const getSuccescriteriaByNiveau = (niveau) =>
 		toolboardData.url.checks[0]
 			? toolboardData.url.checks[0].succescriteria.filter((item) => item.niveau === niveau)
@@ -39,7 +41,9 @@
 		</label>
 	</div>
 
-	<form action="">
+	<form method="POST" action="?/updateChecklist">
+		<input type="hidden" name="niveau" value={selectedNiveau}>
+		<input type="hidden" name="principe" value={toolboardData.principe.index}>
 		{#each richtlijnen as richtlijn}
 			<article>
 				<div>
@@ -55,7 +59,7 @@
 										<span>Criteria {succescriterium.index} ({succescriterium.niveau})</span>
 										<h4>{succescriterium.titel}</h4>
 									</div>
-									<input
+									<input name="check" value={succescriterium.id}
 										type="checkbox"
 										checked={checkedSuccescriteria.find((e) => e.id === succescriterium.id)}
 									/>
@@ -67,6 +71,7 @@
 				{/each}
 			</article>
 		{/each}
+		<button>sumbit</button>
 	</form>
 </section>
 

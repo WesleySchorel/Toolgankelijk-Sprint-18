@@ -13,7 +13,7 @@
 	const toolboardData = data.toolboardData;
 	const richtlijnen = toolboardData.principe.richtlijnen;
 	const principes = data.toolboardData.principes;
-	console.log(principes);
+	// console.log(richtlijnen);
 </script>
 
 <Heading {heading} />

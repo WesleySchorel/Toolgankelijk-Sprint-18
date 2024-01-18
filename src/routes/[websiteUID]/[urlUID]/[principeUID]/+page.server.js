@@ -1,3 +1,4 @@
+// import { Actions } from '@sveltejs/kit';
 import { gql } from 'graphql-request';
 import { hygraph } from '$lib/utils/hygraph.js';
 
@@ -8,27 +9,160 @@ import { error } from '@sveltejs/kit';
 export const load = async ({ params }) => {
 	const { websiteUID } = params;
 	const { urlUID } = params;
-	const {principeUID} = params;
+	const { principeUID } = params;
 	const slugUrl = urlUID;
 	const principeSlug = principeUID;
 	const queryUrl = getQueryUrl(gql, urlUID);
 	const queryToolboard = getQueryToolboard(gql, slugUrl, principeSlug)
 	const urlData = await hygraph.request(queryUrl);
 	const toolboardData = await hygraph.request(queryToolboard);
-	
+
 	if (urlData.url.website.slug === websiteUID) {
 		// Your existing condition
 		if (toolboardData.principe === null) {
 			throw error(404, {
 				message: 'Principe bestaat niet',
-			  });
-		}	
+			});
+		}
 		return {
-		  toolboardData,
-		  urlData,
+			toolboardData,
+			urlData,
 		};
-	  }
-	  throw error(404, {
+	}
+	throw error(404, {
 		message: 'Not found',
-	  });
-	};
+	});
+};
+
+export const actions = {
+	updateChecklist: async ({ request, params }) => {
+		const formData = await request.formData()
+		const clientCheckedSuccesscriteria = formData.getAll('check')
+		const principeIndex = formData.get('principe')
+		const niveau = formData.get('niveau')
+
+		// see of the sent checks are already assigned to this project's checks
+		const { websiteUID } = params;
+		const { urlUID } = params;
+		const { principeUID } = params;
+		const slugUrl = urlUID;
+		const principeSlug = principeUID;
+		const queryUrl = getQueryUrl(gql, urlUID);
+		const queryToolboard = getQueryToolboard(gql, slugUrl, principeSlug)
+		const urlData = await hygraph.request(queryUrl);
+		const toolboardData = await hygraph.request(queryToolboard);
+
+		// get only the succescriteria from the db which have the current principeIndex and niveau of the submitted form
+		const savedCheckedSuccescriteria = toolboardData.url.checks[0]
+			? toolboardData.url.checks[0].succescriteria.filter(obj => {
+				return obj.niveau == niveau && obj.index[0] == principeIndex
+			})
+			: [];
+
+		if (clientCheckedSuccesscriteria.length > 0) {
+
+			clientCheckedSuccesscriteria.forEach(clientCheckedSuccesscriterium => {
+
+				if (savedCheckedSuccescriteria.find(obj => obj.id === clientCheckedSuccesscriterium)) {
+					console.log(clientCheckedSuccesscriterium + " is already true")
+				} else {
+					console.log(clientCheckedSuccesscriterium + " is being added...")
+
+				}
+
+			})
+			savedCheckedSuccescriteria.forEach(savedCheckedSuccescriterium => {
+				if (!clientCheckedSuccesscriteria.find(obj => obj === savedCheckedSuccescriterium.id)) {
+					console.log(savedCheckedSuccescriterium.id + " is being removed...")
+				}
+			})
+		} else {
+			if (savedCheckedSuccescriteria == 0) {
+			console.log("all checks were already false")
+			} else {
+				console.log("all checks are being removed...")
+			}
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// toolboardData.principe.richtlijnen.forEach(richtlijn => {
+		// 	allSuccescriteria.push(richtlijn.succescriteria.filter((obj) => obj.niveau == niveau))
+		// 	// richtlijn.succescriteria.forEach(succescriterium => {
+		// 	// 	allSuccescriteria.push(succescriterium.filter((obj) => obj.niveau == niveau))
+		// 	// })
+		// })
+		// // console.log(allSuccescriteria.flat(Infinity))
+
+		// // loop through all succescriteria that are presented in the current form
+		// allSuccescriteria.flat(Infinity).forEach(allSuccescriterium => {
+		// 	// does the db checks list already contain the checked box
+		// 	if (checkedSuccescriteria.find((obj) => obj.id === allSuccescriterium.id)) {
+		// 		allCheckedSuccesscriteria.forEach(allCheckedSuccesscriterium => {
+		// 			if (checkedSuccescriteria.find((obj) => obj.id === allCheckedSuccesscriterium)) {
+		// 				console.log(allCheckedSuccesscriterium + " ok on")
+		// 			} else {
+		// 				console.log(allCheckedSuccesscriterium + " will be added")
+		// 			}
+		// 		})
+		// 	}
+		// 	if (checkedSuccescriteria.find((obj) => obj.id) !== allSuccescriterium.id) {
+		// 		console.log(allSuccescriterium.id + " ok false")
+		// 	}
+		// })
+
+		// console.log(allSuccescriteria)
+
+
+
+
+		// allCheckedSuccesscriteria.forEach(allCheckedSuccesscriterium => {
+		// 	if (checkedSuccescriteria.find((obj) => obj.id === allCheckedSuccesscriterium)) {
+		// 		//this succescriterium is already in the checks list of this project
+		// 		console.log(allCheckedSuccesscriterium + " yes")
+		// 	} else {
+		// 		//this succescriterium is not yet in the checks list of this project
+		// 		// console.log(allCheckedSuccesscriterium + " no")
+		// 		console.log(allCheckedSuccesscriterium + " is being added to the checks list")
+		// 	}
+		// })
+	}
+}
