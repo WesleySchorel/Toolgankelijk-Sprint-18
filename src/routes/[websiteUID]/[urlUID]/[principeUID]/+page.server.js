@@ -4,6 +4,9 @@ import { hygraph } from '$lib/utils/hygraph.js';
 
 import getQueryUrl from '$lib/queries/url';
 import getQueryToolboard from '$lib/queries/toolboard';
+import firstCheck from '$lib/queries/firstCheck'
+import addCheck from '$lib/queries/addCheck'
+
 import { error } from '@sveltejs/kit';
 
 export const load = async ({ params }) => {
@@ -42,14 +45,10 @@ export const actions = {
 		const niveau = formData.get('niveau')
 
 		// see of the sent checks are already assigned to this project's checks
-		const { websiteUID } = params;
-		const { urlUID } = params;
-		const { principeUID } = params;
+		const { websiteUID, urlUID, principeUID } = params;
 		const slugUrl = urlUID;
 		const principeSlug = principeUID;
-		const queryUrl = getQueryUrl(gql, urlUID);
 		const queryToolboard = getQueryToolboard(gql, slugUrl, principeSlug)
-		const urlData = await hygraph.request(queryUrl);
 		const toolboardData = await hygraph.request(queryToolboard);
 
 		// get only the succescriteria from the db which have the current principeIndex and niveau of the submitted form
@@ -62,33 +61,70 @@ export const actions = {
 		if (clientCheckedSuccesscriteria.length > 0) {
 
 			clientCheckedSuccesscriteria.forEach(clientCheckedSuccesscriterium => {
-
 				if (savedCheckedSuccescriteria.find(obj => obj.id === clientCheckedSuccesscriterium)) {
 					console.log(clientCheckedSuccesscriterium + " is already true")
 				} else {
 					console.log(clientCheckedSuccesscriterium + " is being added...")
-
+					addCheckToList(clientCheckedSuccesscriterium)
 				}
-
 			})
+
 			savedCheckedSuccescriteria.forEach(savedCheckedSuccescriterium => {
 				if (!clientCheckedSuccesscriteria.find(obj => obj === savedCheckedSuccescriterium.id)) {
 					console.log(savedCheckedSuccescriterium.id + " is being removed...")
 				}
 			})
+
 		} else {
 			if (savedCheckedSuccescriteria == 0) {
-			console.log("all checks were already false")
+				console.log("all checks were already false")
 			} else {
 				console.log("all checks are being removed...")
 			}
 		}
+		console.log("===================")
+		// console.log(websiteUID, urlUID)
 
 
+		async function addCheckToList(succescriteriumId) {
+			try {
+				let getFirstCheckId = (await getFirstCheck()).firstCheckId;
 
+				let addCheckQuery = addCheck(gql, websiteUID, urlUID, getFirstCheckId, succescriteriumId)
+				let addCheckId = await hygraph.request(addCheckQuery)
 
+				return {
+					addCheckId,
+					success: true,
+				}
 
+			} catch (error) {
+				console.log(error)
+				return {
+					success: false,
+				}
+			}
+		}
 
+		async function getFirstCheck() {
+			try {
+				let firstCheckQuery = firstCheck(gql, websiteUID, urlUID)
+				let firstCheckResponse = await hygraph.request(firstCheckQuery)
+
+				let firstCheckId = firstCheckResponse.website.urls[0].checks[0].id
+
+				// console.log("id: " + firstCheckId)
+				return {
+					firstCheckId,
+					success: true,
+				}
+
+			} catch (error) {
+				return {
+					success: false,
+				}
+			}
+		}
 
 
 
