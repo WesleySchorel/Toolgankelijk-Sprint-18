@@ -4,9 +4,9 @@ import { hygraph } from '$lib/utils/hygraph.js';
 
 import getQueryUrl from '$lib/queries/url';
 import getQueryToolboard from '$lib/queries/toolboard';
-import firstCheck from '$lib/queries/firstCheck'
-import addCheck from '$lib/queries/addCheck'
-import deleteCheck from '$lib/queries/deleteCheck'
+import firstCheck from '$lib/queries/firstCheck';
+import addCheck from '$lib/queries/addCheck';
+import deleteCheck from '$lib/queries/deleteCheck';
 
 import { error } from '@sveltejs/kit';
 
@@ -17,7 +17,7 @@ export const load = async ({ params }) => {
 	const slugUrl = urlUID;
 	const principeSlug = principeUID;
 	const queryUrl = getQueryUrl(gql, urlUID);
-	const queryToolboard = getQueryToolboard(gql, slugUrl, principeSlug)
+	const queryToolboard = getQueryToolboard(gql, slugUrl, principeSlug);
 	const urlData = await hygraph.request(queryUrl);
 	const toolboardData = await hygraph.request(queryToolboard);
 
@@ -25,86 +25,85 @@ export const load = async ({ params }) => {
 		// Your existing condition
 		if (toolboardData.principe === null) {
 			throw error(404, {
-				message: 'Principe bestaat niet',
+				message: 'Principe bestaat niet'
 			});
 		}
 		return {
 			toolboardData,
-			urlData,
+			urlData
 		};
 	}
 	throw error(404, {
-		message: 'Not found',
+		message: 'Not found'
 	});
 };
 
 export const actions = {
 	updateChecklist: async ({ request, params }) => {
-		const formData = await request.formData()
-		const clientCheckedSuccesscriteria = formData.getAll('check')
-		const principeIndex = formData.get('principe')
-		const niveau = formData.get('niveau')
+		const formData = await request.formData();
+		const clientCheckedSuccesscriteria = formData.getAll('check');
+		const principeIndex = formData.get('principe');
+		const niveau = formData.get('niveau');
 
 		// see of the sent checks are already assigned to this project's checks
 		const { websiteUID, urlUID, principeUID } = params;
 		const slugUrl = urlUID;
 		const principeSlug = principeUID;
-		const queryToolboard = getQueryToolboard(gql, slugUrl, principeSlug)
+		const queryToolboard = getQueryToolboard(gql, slugUrl, principeSlug);
 		const toolboardData = await hygraph.request(queryToolboard);
 
 		// get only the succescriteria from the db which have the current principeIndex and niveau of the submitted form
 		const savedCheckedSuccescriteria = toolboardData.url.checks[0]
-			? toolboardData.url.checks[0].succescriteria.filter(obj => {
-				return obj.niveau == niveau && obj.index[0] == principeIndex
-			})
+			? toolboardData.url.checks[0].succescriteria.filter((obj) => {
+					return obj.niveau == niveau && obj.index[0] == principeIndex;
+			  })
 			: [];
 
 		if (clientCheckedSuccesscriteria.length > 0) {
-
-			clientCheckedSuccesscriteria.forEach(clientCheckedSuccesscriterium => {
-				if (savedCheckedSuccescriteria.find(obj => obj.id === clientCheckedSuccesscriterium)) {
-					console.log(clientCheckedSuccesscriterium + " is already true")
+			clientCheckedSuccesscriteria.forEach((clientCheckedSuccesscriterium) => {
+				if (savedCheckedSuccescriteria.find((obj) => obj.id === clientCheckedSuccesscriterium)) {
+					console.log(clientCheckedSuccesscriterium + ' is already true');
 				} else {
-					console.log(clientCheckedSuccesscriterium + " is being added...")
-					addCheckToList(clientCheckedSuccesscriterium)
+					console.log(clientCheckedSuccesscriterium + ' is being added...');
+					addCheckToList(clientCheckedSuccesscriterium);
 				}
-			})
+			});
 
-			savedCheckedSuccescriteria.forEach(savedCheckedSuccescriterium => {
-				if (!clientCheckedSuccesscriteria.find(obj => obj === savedCheckedSuccescriterium.id)) {
-					console.log(savedCheckedSuccescriterium.id + " is being removed...")
-					deleteCheckFromList(savedCheckedSuccescriterium.id)
+			savedCheckedSuccescriteria.forEach((savedCheckedSuccescriterium) => {
+				if (!clientCheckedSuccesscriteria.find((obj) => obj === savedCheckedSuccescriterium.id)) {
+					console.log(savedCheckedSuccescriterium.id + ' is being removed...');
+					deleteCheckFromList(savedCheckedSuccescriterium.id);
 				}
-			})
-
+			});
 		} else {
 			if (savedCheckedSuccescriteria == 0) {
-				console.log("all checks were already false")
+				console.log('all checks were already false');
 			} else {
-				console.log("all checks are being removed...")
+				console.log('all checks are being removed...');
+				savedCheckedSuccescriteria.forEach((savedCheckedSuccescriterium) => {
+					deleteCheckFromList(savedCheckedSuccescriterium.id);
+				});
 			}
 		}
-		console.log("===================")
+		console.log('===================');
 		// console.log(websiteUID, urlUID)
-
 
 		async function addCheckToList(succescriteriumId) {
 			try {
 				let getFirstCheckId = (await getFirstCheck()).firstCheckId;
 
-				let addCheckQuery = addCheck(gql, websiteUID, urlUID, getFirstCheckId, succescriteriumId)
-				let addCheckId = await hygraph.request(addCheckQuery)
+				let addCheckQuery = addCheck(gql, websiteUID, urlUID, getFirstCheckId, succescriteriumId);
+				let addCheckId = await hygraph.request(addCheckQuery);
 
 				return {
 					addCheckId,
-					success: true,
-				}
-
+					success: true
+				};
 			} catch (error) {
-				console.log(error)
+				console.log(error);
 				return {
-					success: false,
-				}
+					success: false
+				};
 			}
 		}
 
@@ -112,75 +111,45 @@ export const actions = {
 			try {
 				let getFirstCheckId = (await getFirstCheck()).firstCheckId;
 
-				let deleteCheckQuery = deleteCheck(gql, websiteUID, urlUID, getFirstCheckId, succescriteriumId)
-				let deleteCheckId = await hygraph.request(deleteCheckQuery)
+				let deleteCheckQuery = deleteCheck(
+					gql,
+					websiteUID,
+					urlUID,
+					getFirstCheckId,
+					succescriteriumId
+				);
+				let deleteCheckId = await hygraph.request(deleteCheckQuery);
 
 				return {
 					deleteCheckId,
-					success: true,
-				}
-
+					success: true
+				};
 			} catch (error) {
-				console.log(error)
+				console.log(error);
 				return {
-					success: false,
-				}
+					success: false
+				};
 			}
 		}
 
 		async function getFirstCheck() {
 			try {
-				let firstCheckQuery = firstCheck(gql, websiteUID, urlUID)
-				let firstCheckResponse = await hygraph.request(firstCheckQuery)
+				let firstCheckQuery = firstCheck(gql, websiteUID, urlUID);
+				let firstCheckResponse = await hygraph.request(firstCheckQuery);
 
-				let firstCheckId = firstCheckResponse.website.urls[0].checks[0].id
+				let firstCheckId = firstCheckResponse.website.urls[0].checks[0].id;
 
 				// console.log("id: " + firstCheckId)
 				return {
 					firstCheckId,
-					success: true,
-				}
-
+					success: true
+				};
 			} catch (error) {
 				return {
-					success: false,
-				}
+					success: false
+				};
 			}
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 		// toolboardData.principe.richtlijnen.forEach(richtlijn => {
 		// 	allSuccescriteria.push(richtlijn.succescriteria.filter((obj) => obj.niveau == niveau))
@@ -209,9 +178,6 @@ export const actions = {
 
 		// console.log(allSuccescriteria)
 
-
-
-
 		// allCheckedSuccesscriteria.forEach(allCheckedSuccesscriterium => {
 		// 	if (checkedSuccescriteria.find((obj) => obj.id === allCheckedSuccesscriterium)) {
 		// 		//this succescriterium is already in the checks list of this project
@@ -223,4 +189,4 @@ export const actions = {
 		// 	}
 		// })
 	}
-}
+};
