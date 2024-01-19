@@ -95,6 +95,7 @@ export const actions = {
 				let addCheckQuery = addCheck(gql, websiteUID, urlUID, getFirstCheckId, succescriteriumId);
 				let addCheckId = await hygraph.request(addCheckQuery);
 
+				console.log(succescriteriumId + ' is successfully added!');
 				return {
 					addCheckId,
 					success: true
@@ -119,6 +120,8 @@ export const actions = {
 					succescriteriumId
 				);
 				let deleteCheckId = await hygraph.request(deleteCheckQuery);
+
+				console.log(succescriteriumId + ' is successfully removed!');
 
 				return {
 					deleteCheckId,
@@ -150,6 +153,8 @@ export const actions = {
 				};
 			}
 		}
+
+		return { success: true }
 
 		// toolboardData.principe.richtlijnen.forEach(richtlijn => {
 		// 	allSuccescriteria.push(richtlijn.succescriteria.filter((obj) => obj.niveau == niveau))
