@@ -46,6 +46,7 @@
 		method="POST"
 		action="?/updateChecklist"
 		use:enhance={() => {
+			// prevent the form to be reset
 			return ({ update }) => update({ reset: false });
 		}}
 	>

@@ -61,25 +61,32 @@ export const actions = {
 
 		if (clientCheckedSuccesscriteria.length > 0) {
 			clientCheckedSuccesscriteria.forEach((clientCheckedSuccesscriterium) => {
+				// is the form input selected AND saved to the db
 				if (savedCheckedSuccescriteria.find((obj) => obj.id === clientCheckedSuccesscriterium)) {
 					console.log(clientCheckedSuccesscriterium + ' is already true');
 				} else {
+					// the input is selected but cannot be found in the db, so it will be added
 					console.log(clientCheckedSuccesscriterium + ' is being added...');
 					addCheckToList(clientCheckedSuccesscriterium);
 				}
 			});
 
 			savedCheckedSuccescriteria.forEach((savedCheckedSuccescriterium) => {
+				// the saved check found in the db, is not selected in the form by the client
+				// so it should be disconnected from the db
 				if (!clientCheckedSuccesscriteria.find((obj) => obj === savedCheckedSuccescriterium.id)) {
 					console.log(savedCheckedSuccescriterium.id + ' is being removed...');
 					deleteCheckFromList(savedCheckedSuccescriterium.id);
 				}
 			});
 		} else {
+			// there are none checked inputs AND none are in the db connected
 			if (savedCheckedSuccescriteria == 0) {
 				console.log('all checks were already false');
 			} else {
 				console.log('all checks are being removed...');
+				// in case there is one or more checks in the db AND none are checked by the client
+				// disconnect these from the db
 				savedCheckedSuccescriteria.forEach((savedCheckedSuccescriterium) => {
 					deleteCheckFromList(savedCheckedSuccescriterium.id);
 				});
