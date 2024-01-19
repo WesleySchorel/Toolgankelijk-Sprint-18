@@ -6,7 +6,6 @@
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
 
-
 	// console.log(toolboardData)
 
 	const getSuccescriteriaByNiveau = (niveau) =>
@@ -91,7 +90,7 @@
 		bottom: 1rem;
 		right: 1rem;
 		font-size: 1.3rem;
-		padding: .4rem .8rem;
+		padding: 0.4rem 0.8rem;
 		background-color: var(--c-pink);
 		border: none;
 		color: white;
@@ -103,7 +102,7 @@
 		filter: saturate(1.2);
 	}
 	button:active {
-		filter: saturate(1) brightness(.9);
+		filter: saturate(1) brightness(0.9);
 	}
 	select {
 		border-radius: 0.25em;

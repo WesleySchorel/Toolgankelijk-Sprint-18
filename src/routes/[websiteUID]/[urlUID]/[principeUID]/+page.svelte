@@ -38,7 +38,7 @@
 		position: fixed;
 		bottom: 5rem;
 		right: 1rem;
-		height: 5rem;
+		height: 4rem;
 		width: 10rem;
 		background-color: #a0004025;
 		backdrop-filter: blur(3px);
