@@ -2,18 +2,29 @@
 	import Heading from '$lib/components/heading.svelte';
 	import Partner from '$lib/components/partner.svelte';
 	import Search from '$lib/components/search.svelte';
+	import PartnerForm from '../lib/components/partnerForm.svelte';
 	export let data;
 
 	let heading = { titel: 'Partners overzicht' };
-	console.log(data);
+
+	export let form
+
+	function openDialog(el) {
+		let dialog = document.querySelector('dialog');
+
+		dialog.showModal()
+		el.preventDefault();
+	}
 </script>
 
 <Heading {heading} />
 
 <section>
-	<a href="/addPartner">Partner toevoegen</a>
+	<a href="/addPartner" on:click={openDialog}>Partner toevoegen</a>
 	<Search />
 </section>
+
+<dialog><PartnerForm {form}/></dialog>
 
 <ul>
 	{#each data.websites as website}
@@ -22,7 +33,7 @@
 </ul>
 
 <style>
-	section{
+	section {
 		display: flex;
 		justify-content: space-between;
 		margin: 0 0 1em 1em;
