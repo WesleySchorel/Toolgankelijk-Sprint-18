@@ -26,7 +26,7 @@ export const actions = {
       return {
         hygraphCall,
         success: true,
-        message: 'Partner is toegevoegd.'
+        message: name + ' is toegevoegd.'
       }
     } catch (error) {
       
