@@ -19,12 +19,14 @@
 		flex-direction: row;
 		justify-content: flex-start;
 		align-items: flex-start;
+		margin: 0.5em;
 	}
 
 	article {
 		background-color: var(--c-container);
-		margin: 0.5em;
 		border-radius: 4px;
+		margin-right: 0.5em;
+		margin-bottom: 0.5em;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;

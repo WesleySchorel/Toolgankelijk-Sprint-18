@@ -15,21 +15,22 @@
 </script>
 
 <section class="form-container">
+	<h2>Partner toevoegen</h2>
     <form on:submit={submitted()} method="POST">
         <label for="name">Voeg een partner titel toe</label>
         <input id="name" name="name" required type="text" />
 
         <label for="url" class="url-label">Voeg een Partner homepagina URL toe</label>
         <input id="url" name="url" required type="url" />
-        <button class="add-button">Partner toevoegen</button>
+        <button class="add-button">Toevoegen</button>
     </form>
 </section>
 
 <style>
     .form-container {
 		background-color: var(--c-container);
-		margin: 0.5em;
-		border-radius: 4px;
+		border: solid 1px var(--c-container-stroke);
+		border-radius: 0.5em;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
@@ -42,16 +43,28 @@
 		width: 100%;
 	}
 
+	h2{
+		border-bottom: 1px solid var(--c-container-stroke);
+		width: 100%;
+		padding-bottom: 0.25em;
+		color: var(--c-white);
+	}
+
+	form{
+		margin-top: 1em;
+	}
+
     .add-button {
 		border: none;
-		background-color: var(--c-modal-button);
+		background-color: var(--c-pink);
 		color: white;
-		padding: 0.7em;
+		padding: 0.5em 1em;
 		cursor: pointer;
 		text-decoration: none;
 		transition: 0.3s;
-		border-radius: 4px;
-		margin-top: 2em;
+		border-radius: 0.25em;
+		margin-top: 1em;
+		font-size: 1em;
 	}
 
 	input[type='text'],

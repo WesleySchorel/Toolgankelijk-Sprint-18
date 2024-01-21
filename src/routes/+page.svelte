@@ -70,9 +70,19 @@
 	}
 
 	dialog {
-		margin: 0;
-		padding: 0;
+		background-color: var(--c-container);
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		overflow: visible;
 		width: 100%;
-		overflow: hidden;
+		max-width: 30em;
+		border: none;
+	}
+
+	dialog::backdrop {
+		background-color: rgb(44, 44, 44);
+		opacity: 0.8;
 	}
 </style>
