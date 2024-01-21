@@ -7,12 +7,12 @@
 
 	let heading = { titel: 'Partners overzicht' };
 
-	export let form
+	export let form;
 
 	function openDialog(el) {
 		let dialog = document.querySelector('dialog');
 
-		dialog.showModal()
+		dialog.showModal();
 		el.preventDefault();
 	}
 </script>
@@ -24,7 +24,7 @@
 	<Search />
 </section>
 
-<dialog><PartnerForm {form}/></dialog>
+<dialog><PartnerForm {form} /></dialog>
 
 <ul>
 	{#each data.websites as website}
@@ -67,5 +67,12 @@
 		list-style-type: none;
 		margin: 0 1em;
 		margin-bottom: 1em;
+	}
+
+	dialog {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		overflow: hidden;
 	}
 </style>

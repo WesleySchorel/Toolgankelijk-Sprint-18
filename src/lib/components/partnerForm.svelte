@@ -80,4 +80,8 @@
 		justify-content: flex-start;
 		align-items: flex-start;
 	}
+
+	label{
+		color: var(--c-white);
+	}
 </style>
