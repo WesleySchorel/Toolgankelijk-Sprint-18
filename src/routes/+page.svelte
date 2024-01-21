@@ -30,7 +30,7 @@
 	<div class="toast"><p>{form?.message}</p></div>
 {/if}
 
-<dialog><PartnerForm {form} /></dialog>
+<dialog><PartnerForm /></dialog>
 
 <ul>
 	{#each data.websites as website}
