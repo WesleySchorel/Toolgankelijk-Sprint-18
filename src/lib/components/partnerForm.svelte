@@ -4,10 +4,10 @@
 <section class="form-container">
 	<h2>Partner toevoegen</h2>
 	<form method="POST">
-		<label for="name">Voeg een partner titel toe</label>
+		<label for="name">Partner titel</label>
 		<input id="name" name="name" required type="text" />
 
-		<label for="url" class="url-label">Voeg een Partner homepagina URL toe</label>
+		<label for="url" class="url-label">Partner homepagina URL</label>
 		<input id="url" name="url" required type="url" />
 		<button class="add-button">Toevoegen</button>
 	</form>
