@@ -1,33 +1,20 @@
 <script>
-	export let form;
-	
-	function submitted() {
-		if (form?.success) {
-            alert(form?.message);
-            setTimeout( () => {
-                window.location.href = '/'
-            }, 1000)
-			
-		}else if(form?.success == false){
-            alert(form?.message);
-        }
-	}
 </script>
 
 <section class="form-container">
 	<h2>Partner toevoegen</h2>
-    <form on:submit={submitted()} method="POST">
-        <label for="name">Voeg een partner titel toe</label>
-        <input id="name" name="name" required type="text" />
+	<form method="POST">
+		<label for="name">Voeg een partner titel toe</label>
+		<input id="name" name="name" required type="text" />
 
-        <label for="url" class="url-label">Voeg een Partner homepagina URL toe</label>
-        <input id="url" name="url" required type="url" />
-        <button class="add-button">Toevoegen</button>
-    </form>
+		<label for="url" class="url-label">Voeg een Partner homepagina URL toe</label>
+		<input id="url" name="url" required type="url" />
+		<button class="add-button">Toevoegen</button>
+	</form>
 </section>
 
 <style>
-    .form-container {
+	.form-container {
 		background-color: var(--c-container);
 		border: solid 1px var(--c-container-stroke);
 		border-radius: 0.5em;
@@ -38,23 +25,23 @@
 		padding: 1.2em;
 	}
 
-    .form-container {
+	.form-container {
 		line-height: 2em;
 		width: 100%;
 	}
 
-	h2{
+	h2 {
 		border-bottom: 1px solid var(--c-container-stroke);
 		width: 100%;
 		padding-bottom: 0.25em;
 		color: var(--c-white);
 	}
 
-	form{
+	form {
 		margin-top: 1em;
 	}
 
-    .add-button {
+	.add-button {
 		border: none;
 		background-color: var(--c-pink);
 		color: white;
@@ -94,7 +81,7 @@
 		align-items: flex-start;
 	}
 
-	label{
+	label {
 		color: var(--c-white);
 	}
 </style>

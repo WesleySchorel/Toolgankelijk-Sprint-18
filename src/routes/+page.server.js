@@ -29,7 +29,7 @@ export const actions = {
         return {
           hygraphCall,
           success: true,
-          message: 'Partner is toegevoegd, verwijzing naar homepage in een paar seconden.'
+          message: 'Partner is toegevoegd.'
         }
       } catch (error) {
         
