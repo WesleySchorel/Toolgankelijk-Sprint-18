@@ -20,7 +20,7 @@
 <Heading {heading} />
 
 <section>
-	<button>Project toevoegen</button>
+	<a href="/addUrl">Project Toevoegen</a>
 	<Search />
 </section>
 
@@ -37,7 +37,7 @@
 		margin: 0 0 1em 1em;
 	}
 
-	button{
+	a{
 		border-radius: 0.25em;
 		padding: 0.5em 1em;
 		color: var(--c-white);
@@ -47,9 +47,10 @@
 		font-size: 1em;
 		transition: 0.3s;
 		cursor: pointer;
+		text-decoration: none;
 	}
 
-	button:hover {
+	a:hover {
 		opacity: 0.75;
 	}
 
