@@ -18,6 +18,8 @@
 
 		progressbar.value = random;
 		labelValue.innerHTML = random + '%';
+
+		$: document.querySelector(`#icons-${website.id}`).style.display = 'flex';
 	});
 
 	const faviconAPI =
@@ -75,7 +77,7 @@
 				<img height="60" src="{faviconAPI}{website.url}/&size=128" alt="" />
 				<h2>{overzicht.titel} <span>/{website.slug}</span></h2>
 			</div>
-			<div class="icons">
+			<div class="icons" id={`icons-${website.id}`}>
 				<button on:click={openEdit}><img src={pencil} alt="Verwijder icon" /></button>
 				<button on:click={openDelete}><img src={trash} alt="Verwijder icon" /></button>
 			</div>
@@ -98,7 +100,7 @@
 				<span>{overzicht.titel}</span>? Deze actie kan niet ongedaan worden gemaakt.
 			</p>
 			<input class="id-field" type="text" name="id" value={website.id} id={website.id} />
-			<div>
+			<div class="icons" id={`icons-${website.id}`}>
 				<input type="submit" value="Ja" />
 				<button on:click={closeDelete}>Nee</button>
 			</div>
@@ -124,7 +126,7 @@
 
 <style>
 	.icons {
-		display: flex;
+		display: none;
 		justify-content: space-between;
 	}
 

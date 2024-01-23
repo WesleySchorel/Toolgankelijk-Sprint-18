@@ -24,6 +24,8 @@
 
 		progressbar.value = random;
 		labelValue.innerHTML = random + '%';
+
+		$: document.querySelector(`#icons-${website.id}`).style.display = 'flex';
 	});
 	const faviconAPI =
 		'https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=';
@@ -70,7 +72,7 @@
 				<img height="60" src="{faviconAPI}{website.homepage}/&size=128" alt="" />
 				<h2 class="name">{website.titel}</h2>
 			</div>
-			<div class="icons">
+			<div class="icons" id={`icons-${website.id}`}>
 				<button on:click={openEdit}><img src={pencil} alt="Verwijder icon" /></button>
 				<button on:click={openDelete}><img src={trash} alt="Verwijder icon" /></button>
 			</div>
@@ -147,6 +149,11 @@
 		background: none;
 		cursor: pointer;
 		border: none;
+	}
+
+	.icons {
+		display: none;
+		justify-content: space-between;
 	}
 
 	.popup-verwijder,
@@ -242,6 +249,10 @@
 	form button:hover,
 	input[type='submit']:hover {
 		opacity: 0.75;
+	}
+
+	a section button:first-child {
+		margin-right: 5px;
 	}
 
 	.logo-partner-section {
