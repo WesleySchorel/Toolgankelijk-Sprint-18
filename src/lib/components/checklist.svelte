@@ -155,6 +155,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		font-weight: 600;
 	}
 
 	label div {
