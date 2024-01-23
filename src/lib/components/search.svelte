@@ -20,6 +20,22 @@
 			}
 		});
 	}
+
+	import Page1 from './Page1.svelte';
+	import Page2 from './Page2.svelte';
+	
+	let component;
+	let props;
+	
+	const page1 = () => {
+		component = Page1;
+		props = {page1Prop: 1};
+	};
+	
+	const page2 = () => {
+		component = Page2;
+		props = {page2Prop: 2};
+	};
 </script>
 
 <form class="form-off" on:input={submitPartner}>
