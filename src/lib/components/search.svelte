@@ -31,7 +31,6 @@
 	/* form */
 	form {
 		margin: 0 1em;
-		margin-bottom: 1em;
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
