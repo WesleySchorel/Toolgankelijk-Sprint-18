@@ -23,8 +23,8 @@
 </script>
 
 <form class="form-off" on:input={submitPartner}>
-	<label for="partner-search">Zoek een partner</label>
-	<input type="search" id="partner-search" placeholder="Connexxion" bind:value={input} />
+	<label for="partner-search">Partner of url zoeken:</label>
+	<input type="search" id="partner-search" placeholder="Zoeken" bind:value={input} />
 </form>
 
 <style>
