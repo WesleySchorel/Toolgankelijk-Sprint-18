@@ -1,17 +1,7 @@
 <script>
+	import UrlForm from "../../lib/components/urlForm.svelte";
+
 	export let form;
-	
-	function submitted() {
-		if (form?.success) {
-            alert(form?.message);
-            setTimeout( () => {
-                window.location.href = '/'
-            }, 1000)
-			
-		}else if(form?.success == false){
-            alert(form?.message);
-        }
-	}
 </script>
 
 <section class="content-container">
@@ -20,17 +10,14 @@
 		<p>Voeg een bestaande url toe van de website van een partner!</p>
 	</article>
 
-	<section class="form-container">
-		<form on:submit={submitted()} method="POST">
-			<label for="name">Voeg een pagina titel toe</label>
-			<input id="name" name="name" required type="text" />
-
-			<label for="url" class="url-label">Voeg een URL van de partner toe</label>
-			<input id="url" name="url" required type="url" />
-			<button class="add-button">URL toevoegen</button>
-		</form>
-	</section>
+	<UrlForm />
 </section>
+
+{#if form?.success}
+	<div class="toast"><p>{form?.message}</p></div>
+{:else if form?.success == false}
+	<div class="toast"><p>{form?.message}</p></div>
+{/if}
 
 <style>
 	.content-container {
@@ -38,13 +25,14 @@
 		flex-direction: row;
 		justify-content: flex-start;
 		align-items: flex-start;
+		margin: 0.5em;
 	}
 
-	article,
-	.form-container {
+	article {
 		background-color: var(--c-container);
-		margin: 0.5em;
 		border-radius: 4px;
+		margin-right: 0.5em;
+		margin-bottom: 0.5em;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
@@ -52,53 +40,44 @@
 		padding: 1.2em;
 	}
 
-	.form-container {
-		line-height: 2em;
-		width: 100%;
-	}
-
 	.tip {
 		color: var(--c-orange);
 		line-height: 1.5em;
 	}
 
-	.add-button {
-		border: none;
-		background-color: var(--c-modal-button);
-		color: white;
-		padding: 0.7em;
-		cursor: pointer;
-		text-decoration: none;
-		transition: 0.3s;
+	.toast {
+		position: fixed;
+		bottom: 5rem;
+		right: 1rem;
+		height: 4rem;
+		width: 10rem;
+		background-color: #a0004025;
+		backdrop-filter: blur(3px);
+		border: 1px solid var(--c-pink);
 		border-radius: 4px;
-		margin-top: 2em;
+		padding: 0.5rem;
+		text-shadow: 0px 0px 10px black;
+		animation: fade-out 4s forwards;
+		z-index: 2;
 	}
 
-	input[type='text'],
-	input[type='url'] {
-		width: 100%;
-		padding: 12px 20px;
-		display: inline-block;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-		box-sizing: border-box;
-		max-width: 700px;
-	}
-
-	.add-button:hover {
-		opacity: 0.75;
-	}
-
-	.url-label {
-		margin-top: 1em;
-	}
-
-	form {
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: flex-start;
+	@keyframes fade-out {
+		from {
+			transform: translateX(30vh);
+			display: block;
+		}
+		10% {
+			transform: translateX(0);
+			display: block;
+		}
+		80% {
+			transform: translateX(0);
+			display: block;
+		}
+		to {
+			transform: translateX(30vh);
+			display: none;
+		}
 	}
 
 	@media (max-width: 850px) {

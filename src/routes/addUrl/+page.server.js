@@ -19,21 +19,23 @@ export const actions = {
     // slugs moeten lowercase sinds het uniek is
     const slug = name.toLowerCase()
 
-    try {
-      let query = getQueryAddPartner(gql, name, url, slug)
-      let hygraphCall = await hygraph.request(query)
+    console.log(name, url, slug)
 
-      return {
-        hygraphCall,
-        success: true,
-        message: name + ' is toegevoegd.'
-      }
-    } catch (error) {
+    // try {
+    //   let query = getQueryAddPartner(gql, name, url, slug)
+    //   let hygraphCall = await hygraph.request(query)
 
-      return {
-        message: 'Er ging wat mis, probeer het opnieuw.',
-        success: false
-      }
-    }
+    //   return {
+    //     hygraphCall,
+    //     success: true,
+    //     message: name + ' is toegevoegd.'
+    //   }
+    // } catch (error) {
+
+    //   return {
+    //     message: 'Er ging wat mis, probeer het opnieuw.',
+    //     success: false
+    //   }
+    // }
   },
 };
