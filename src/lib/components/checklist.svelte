@@ -4,6 +4,9 @@
 	export let selectedNiveau = 'A';
 
 	import { onMount } from 'svelte';
+	import { enhance } from '$app/forms';
+
+	// console.log(toolboardData)
 
 	const getSuccescriteriaByNiveau = (niveau) =>
 		toolboardData.url.checks[0]
@@ -18,13 +21,12 @@
 	};
 
 	const checkedSuccescriteria = toolboardData.url.checks[0]
-		? toolboardData.url.checks[0].succescriteria.filter((item) => item.niveau === selectedNiveau)
+		? toolboardData.url.checks[0].succescriteria
 		: [];
-
 	onMount(() => {
 		const niveauToggle = document.querySelector('#niveau-toggle');
 		console.log(niveauToggle);
-		niveauToggle.classList.toggle("disabled")
+		niveauToggle.classList.toggle('disabled');
 	});
 </script>
 
@@ -40,7 +42,16 @@
 		</label>
 	</div>
 
-	<form action="">
+	<form
+		method="POST"
+		action="?/updateChecklist"
+		use:enhance={() => {
+			// prevent the form to be reset
+			return ({ update }) => update({ reset: false });
+		}}
+	>
+		<input type="hidden" name="niveau" value={selectedNiveau} />
+		<input type="hidden" name="principe" value={toolboardData.principe.index} />
 		{#each richtlijnen as richtlijn}
 			<article>
 				<div>
@@ -57,6 +68,8 @@
 										<h4>{succescriterium.titel}</h4>
 									</div>
 									<input
+										name="check"
+										value={succescriterium.id}
 										type="checkbox"
 										checked={checkedSuccescriteria.find((e) => e.id === succescriterium.id)}
 									/>
@@ -68,10 +81,30 @@
 				{/each}
 			</article>
 		{/each}
+		<button>Opslaan</button>
 	</form>
 </section>
 
 <style>
+	button {
+		position: fixed;
+		bottom: 1rem;
+		right: 1rem;
+		font-size: 1.3rem;
+		padding: 0.4rem 0.8rem;
+		background-color: var(--c-pink);
+		border: none;
+		color: white;
+		margin-top: 1rem;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+	button:hover {
+		filter: saturate(1.2);
+	}
+	button:active {
+		filter: saturate(1) brightness(0.9);
+	}
 	select {
 		border-radius: 0.25em;
 		padding: 0.5em 1em;
