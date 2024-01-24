@@ -36,21 +36,28 @@
 	function openDelete(event) {
 		event.preventDefault();
 		openedDelete = openedDelete === website.id ? null : website.id;
+		document.body.style.overflowY = 'hidden';
+		window.scrollTo({ top: 0, behavior: 'smooth' });
 	}
 
 	function closeDelete(event) {
 		event.preventDefault();
 		openedDelete = null;
+		document.body.style.overflowY = 'scroll';
+
 	}
 
 	function openEdit(event) {
 		event.preventDefault();
 		openedEdit = openedEdit === website.id ? null : website.id;
+		document.body.style.overflowY = 'hidden';
+		window.scrollTo({ top: 0, behavior: 'smooth' });
 	}
 
 	function closeEdit(event) {
 		event.preventDefault();
 		openedEdit = null;
+		document.body.style.overflowY = 'scroll';
 	}
 
 	function submitted() {
@@ -232,7 +239,7 @@
 	.popup-edit {
 		position: absolute;
 		width: 100%;
-		height: calc(100% - 90px);
+		height: 100%;
 		bottom: 0;
 		left: 0;
 		display: none;
