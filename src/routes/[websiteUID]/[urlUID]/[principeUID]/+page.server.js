@@ -150,7 +150,6 @@ export const actions = {
 
 				let firstCheckId = firstCheckResponse.website.urls[0].checks[0].id;
 
-				// console.log("id: " + firstCheckId)
 				return {
 					firstCheckId,
 					success: true
@@ -163,43 +162,5 @@ export const actions = {
 		}
 
 		return { success: true };
-
-		// toolboardData.principe.richtlijnen.forEach(richtlijn => {
-		// 	allSuccescriteria.push(richtlijn.succescriteria.filter((obj) => obj.niveau == niveau))
-		// 	// richtlijn.succescriteria.forEach(succescriterium => {
-		// 	// 	allSuccescriteria.push(succescriterium.filter((obj) => obj.niveau == niveau))
-		// 	// })
-		// })
-		// // console.log(allSuccescriteria.flat(Infinity))
-
-		// // loop through all succescriteria that are presented in the current form
-		// allSuccescriteria.flat(Infinity).forEach(allSuccescriterium => {
-		// 	// does the db checks list already contain the checked box
-		// 	if (checkedSuccescriteria.find((obj) => obj.id === allSuccescriterium.id)) {
-		// 		allCheckedSuccesscriteria.forEach(allCheckedSuccesscriterium => {
-		// 			if (checkedSuccescriteria.find((obj) => obj.id === allCheckedSuccesscriterium)) {
-		// 				console.log(allCheckedSuccesscriterium + " ok on")
-		// 			} else {
-		// 				console.log(allCheckedSuccesscriterium + " will be added")
-		// 			}
-		// 		})
-		// 	}
-		// 	if (checkedSuccescriteria.find((obj) => obj.id) !== allSuccescriterium.id) {
-		// 		console.log(allSuccescriterium.id + " ok false")
-		// 	}
-		// })
-
-		// console.log(allSuccescriteria)
-
-		// allCheckedSuccesscriteria.forEach(allCheckedSuccesscriterium => {
-		// 	if (checkedSuccescriteria.find((obj) => obj.id === allCheckedSuccesscriterium)) {
-		// 		//this succescriterium is already in the checks list of this project
-		// 		console.log(allCheckedSuccesscriterium + " yes")
-		// 	} else {
-		// 		//this succescriterium is not yet in the checks list of this project
-		// 		// console.log(allCheckedSuccesscriterium + " no")
-		// 		console.log(allCheckedSuccesscriterium + " is being added to the checks list")
-		// 	}
-		// })
 	}
 };
