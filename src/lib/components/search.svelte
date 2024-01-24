@@ -1,6 +1,13 @@
 <script>
 	// form submit
 	let input;
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		// Your client-side code to run after the component is mounted
+		document.querySelector('form').classList.remove('form-off');
+	});
+	
 	function submitPartner() {
 		let websites = document.querySelectorAll('.website');
 
@@ -15,21 +22,24 @@
 	}
 </script>
 
-<form on:input={submitPartner}>
-	<label for="partner-search">Zoek een partner</label>
-	<input type="search" id="partner-search" placeholder="Connexxion" bind:value={input} />
+<form class="form-off" on:input={submitPartner}>
+	<label for="partner-search">Partner of url zoeken:</label>
+	<input type="search" id="partner-search" placeholder="Zoeken" bind:value={input} />
 </form>
 
 <style>
 	/* form */
 	form {
 		margin: 0 1em;
-		margin-bottom: 1em;
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
 		gap: 1em;
 		font-weight: 600;
+	}
+
+	.form-off {
+		display: none;
 	}
 
 	input {

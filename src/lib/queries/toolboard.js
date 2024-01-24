@@ -9,6 +9,7 @@ export default function getQueryToolboard(gql, slugUrl, principeSlug) {
             succescriteria(first: 100) {
               id
               index
+              niveau
             }
           }
         }
