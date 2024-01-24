@@ -11,7 +11,7 @@
 </script>
 
 <Heading {heading} />
-<section class="container-voortgang-1">
+<!-- <section class="container-voortgang-1">
 	<div class="container-voortgang-2">
 		<ul>
 			<li>
@@ -45,7 +45,7 @@
 			</li>
 		</ul>
 	</div>
-</section>
+</section> -->
 
 <section class="container-principes">
 	<ul>
@@ -74,7 +74,7 @@
 		box-sizing: border-box;
 	}
 
-    /* VOORTGANG */
+    /* VOORTGANG
 	.container-voortgang-1 {
 		background-color: var(--c-container);
 		padding: 1em 1em;
@@ -107,7 +107,7 @@
 		padding: 1em;
 		border-radius: 0.5em;
 		min-width: 16em;
-	}
+	} */
 
 	li a {
 		text-decoration: none;
@@ -115,7 +115,7 @@
 	}
 
     /* VOORTGANG PRESTATIES */
-	.goed-bezig {
+	/* .goed-bezig {
 		color: var(--c-green);
 		font-size: 1.25em;
 	}
@@ -123,7 +123,7 @@
 	.tip {
 		color: var(--c-orange);
 		font-size: 1.25em;
-	}
+	} */
 
 
 
@@ -146,6 +146,11 @@
 
 	.container-principes  li {
 		border-radius: 0.5em;
+		border: solid 1px transparent;
+	}
+
+	.container-principes li:hover {
+		border: solid 1px var(--c-pink);
 	}
 
 	span {
