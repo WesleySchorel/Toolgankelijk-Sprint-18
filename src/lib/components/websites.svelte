@@ -34,7 +34,7 @@
 	const updatedTime = new Date(website.updatedAt);
 	const currentTime = new Date();
 	const timeDifference = Math.floor((currentTime - updatedTime) / (60 * 1000)); // Verschil in minuten
-	const lastTime = timeDifference > 0 ? `${timeDifference} min ago` : 'Just now';
+	const lastTime = timeDifference > 0 ? `${timeDifference} min geleden` : 'Zojuist';
 
 	function openDelete(event) {
 		event.preventDefault();
