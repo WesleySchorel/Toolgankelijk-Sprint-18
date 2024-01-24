@@ -82,7 +82,6 @@
 				<button on:click={openDelete}><img src={trash} alt="Verwijder icon" /></button>
 			</div>
 		</section>
-
 		<section class="more-info-section">
 			<span>Laatst bewerkt: {lastTime}</span>
 
@@ -92,44 +91,152 @@
 			</div>
 		</section>
 	</a>
-	<div class="popup-verwijder" style="display: {openedDelete === website.id ? 'flex' : 'none'};">
-		<form on:submit={submitted()} action="?/deletePost" method="POST">
-			<h3>Verwijder URL</h3>
-			<p>
-				Weet je zeker dat je <span>{website.slug}</span> wilt verwijderen uit
-				<span>{overzicht.titel}</span>? Deze actie kan niet ongedaan worden gemaakt.
-			</p>
-			<input class="id-field" type="text" name="id" value={website.id} id={website.id} />
-			<div class="icons" id={`icons-${website.id}`}>
-				<input type="submit" value="Ja" />
-				<button on:click={closeDelete}>Nee</button>
-			</div>
-		</form>
-	</div>
-	<div class="popup-edit" style="display: {openedEdit === website.id ? 'flex' : 'none'};">
-		<form on:submit={submitted()} action="?/editPost" method="POST">
-			<h3>Pas URL aan</h3>
-			<div class="fields-container">
-				<label for="slug">Slug</label>
-				<input type="text" name="slug" id="slug" value={website.slug} />
-				<label for="url">URL</label>
-				<input type="url" name="url" id="url" value={website.url} />
-			</div>
-			<input class="id-field" type="text" name="id" value={website.id} id={website.id} />
-			<div>
-				<input type="submit" value="Ja" />
-				<button on:click={closeEdit}>Nee</button>
-			</div>
-		</form>
-	</div>
 </li>
 
+<!-- Popup voor het bewerken van de URL -->
+<div class="popup-edit" style="display: {openedEdit === website.id ? 'flex' : 'none'};">
+	<form on:submit={submitted()} action="?/editPost" method="POST">
+		<h3>Pas URL aan</h3>
+		<div class="fields-container">
+			<label for="slug">Slug</label>
+			<input type="text" name="slug" id="slug" value={website.slug} />
+			<label for="url">URL</label>
+			<input type="url" name="url" id="url" value={website.url} />
+			<input class="id-field" type="text" name="id" value={website.id} id={website.id} />
+		</div>
+		<div>
+			<input type="submit" value="Ja" />
+			<button on:click={closeEdit}>Nee</button>
+		</div>
+	</form>
+</div>
+
+<!-- Popup voor het verwijderen van de URL -->
+<div class="popup-verwijder" style="display: {openedDelete === website.id ? 'flex' : 'none'};">
+	<form on:submit={submitted()} action="?/deletePost" method="POST">
+		<h3>Verwijder URL</h3>
+		<p>
+			Weet je zeker dat je <span>{website.slug}</span> wilt verwijderen uit
+			<span>{overzicht.titel}</span>? Deze actie kan niet ongedaan worden gemaakt.
+		</p>
+		<input class="id-field" type="text" name="id" value={website.id} id={website.id} />
+		<div>
+			<input type="submit" value="Ja" />
+			<button on:click={closeDelete}>Nee</button>
+		</div>
+	</form>
+</div>
+
 <style>
+	li {
+		display: flex;
+	}
+
+	li a {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 2.25em;
+		color: var(--c-text);
+		text-decoration: none;
+		background-color: var(--c-container);
+		padding: 1em;
+		border-radius: 0.5em;
+		border: solid 1px var(--c-container-stroke);
+		width: 100%;
+		transition: 0.25s ease;
+		position: relative;
+	}
+
+	li a:hover {
+		border: solid 1px var(--c-pink);
+	}
+
+	h2 {
+		font-size: 1.5em;
+		margin-top: 0.05em;
+		color: var(--c-grey);
+	}
+
+	span {
+		display: block;
+		color: var(--c-white);
+	}
+
+	.logo-partner-section {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		position: relative;
+	}
+
 	.icons {
 		display: none;
 		justify-content: space-between;
+		position: absolute;
+		right: 0;
+		top: 0;
 	}
 
+	a section button {
+		background: none;
+		cursor: pointer;
+		border: none;
+	}
+
+	a section button:first-child {
+		margin-right: 5px;
+	}
+
+	.more-info-section {
+		display: flex;
+		flex-direction: column;
+		font-size: 0.9em;
+	}
+
+	/* progress bar */
+	.progress-container {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: flex-end;
+		gap: 1em;
+		margin-top: 0.25em;
+	}
+
+	progress {
+		width: 100%;
+	}
+
+	progress[value] {
+		/* Reset the default appearance */
+		-webkit-appearance: none;
+		appearance: none;
+		height: 60%;
+	}
+
+	/* chrome/safari */
+	progress[value]::-webkit-progress-bar {
+		background-color: var(--c-container-stroke);
+		border-radius: 0.5em;
+	}
+
+	progress[value]::-webkit-progress-value {
+		background-color: var(--c-pink);
+		border-radius: 0.5em;
+		transition: 1s ease-out;
+	}
+
+	.progress-percentage {
+		height: 85%;
+	}
+
+	/* search css */
+	.container-off {
+		display: none;
+	}
+
+	/* Popup formulier */
 	.popup-verwijder,
 	.popup-edit {
 		position: absolute;
@@ -223,104 +330,5 @@
 	form button:hover,
 	input[type='submit']:hover {
 		opacity: 0.75;
-	}
-
-	a section button {
-		background: none;
-		cursor: pointer;
-		border: none;
-	}
-
-	a section button:first-child {
-		margin-right: 5px;
-	}
-
-	li {
-		display: flex;
-	}
-
-	li a {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		gap: 2.25em;
-		color: var(--c-text);
-		text-decoration: none;
-		background-color: var(--c-container);
-		padding: 1em;
-		border-radius: 0.5em;
-		border: solid 1px var(--c-container-stroke);
-		width: 100%;
-		transition: 0.25s ease;
-		position: relative;
-	}
-
-	li a:hover {
-		border: solid 1px var(--c-pink);
-	}
-
-	.logo-partner-section {
-		display: flex;
-		align-items: flex-start;
-		justify-content: space-between;
-	}
-
-	h2 {
-		font-size: 1.5em;
-		margin-top: 0.05em;
-		color: var(--c-grey);
-	}
-
-	span {
-		display: block;
-		color: var(--c-white);
-	}
-
-	.more-info-section {
-		display: flex;
-		flex-direction: column;
-		font-size: 0.9em;
-	}
-
-	/* progress bar */
-	.progress-container {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: flex-end;
-		gap: 1em;
-		margin-top: 0.25em;
-	}
-
-	progress {
-		width: 100%;
-	}
-
-	progress[value] {
-		/* Reset the default appearance */
-		-webkit-appearance: none;
-		appearance: none;
-		height: 60%;
-	}
-
-	/* chrome/safari */
-	progress[value]::-webkit-progress-bar {
-		background-color: var(--c-container-stroke);
-		border-radius: 0.5em;
-	}
-
-	progress[value]::-webkit-progress-value {
-		background-color: var(--c-pink);
-		border-radius: 0.5em;
-		transition: 1s ease-out;
-	}
-
-	.progress-percentage {
-		height: 85%;
-	}
-
-	/* search css */
-	.container-off {
-		display: none;
 	}
 </style>
