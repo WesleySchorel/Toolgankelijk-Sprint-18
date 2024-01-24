@@ -30,7 +30,7 @@ export const actions = {
     // let partnerSlug = url.searchParams.get('partner')
 
     const formData = await request.formData();
-    const name = formData.get('name')
+    const name = formData.get('name').toLowerCase()
     const formUrl = formData.get('url');
     const formSlug = formData.get('slug');
 
