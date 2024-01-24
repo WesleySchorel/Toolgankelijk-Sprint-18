@@ -6,6 +6,8 @@
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
 
+	let loading = false;
+
 	// console.log(toolboardData)
 
 	const getSuccescriteriaByNiveau = (niveau) =>
@@ -28,6 +30,15 @@
 		console.log(niveauToggle);
 		niveauToggle.classList.toggle('disabled');
 	});
+
+	// const updateChecklist = () => {
+	// 	loading = true;
+	// 	return async ({ update }) => {
+	// 		loading = false;
+	// 		console.log(loading);
+	// 		await update();
+	// 	};
+	// };
 </script>
 
 <section>
@@ -46,8 +57,11 @@
 		method="POST"
 		action="?/updateChecklist"
 		use:enhance={() => {
-			// prevent the form to be reset
-			return ({ update }) => update({ reset: false });
+			loading = true;
+			return async ({ update }) => {
+				loading = false;
+				update({ reset: false });
+			};
 		}}
 	>
 		<input type="hidden" name="niveau" value={selectedNiveau} />
@@ -81,7 +95,13 @@
 				{/each}
 			</article>
 		{/each}
-		<button>Opslaan</button>
+		<button>
+			{#if loading}
+				Loading...
+			{:else}
+				Opslaan
+			{/if}
+		</button>
 	</form>
 </section>
 
