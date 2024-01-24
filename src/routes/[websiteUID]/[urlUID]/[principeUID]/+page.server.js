@@ -11,6 +11,7 @@ import deleteCheck from '$lib/queries/deleteCheck';
 import { error } from '@sveltejs/kit';
 
 export const load = async ({ params }) => {
+	console.log('loading...')
 	const { websiteUID } = params;
 	const { urlUID } = params;
 	const { principeUID } = params;
@@ -60,25 +61,25 @@ export const actions = {
 			: [];
 
 		if (clientCheckedSuccesscriteria.length > 0) {
-			clientCheckedSuccesscriteria.forEach((clientCheckedSuccesscriterium) => {
+			for (const clientCheckedSuccesscriterium of clientCheckedSuccesscriteria) {
 				// is the form input selected AND saved to the db
 				if (savedCheckedSuccescriteria.find((obj) => obj.id === clientCheckedSuccesscriterium)) {
 					console.log(clientCheckedSuccesscriterium + ' is already true');
 				} else {
 					// the input is selected but cannot be found in the db, so it will be added
 					console.log(clientCheckedSuccesscriterium + ' is being added...');
-					addCheckToList(clientCheckedSuccesscriterium);
+					await addCheckToList(clientCheckedSuccesscriterium);
 				}
-			});
+			}
 
-			savedCheckedSuccescriteria.forEach((savedCheckedSuccescriterium) => {
+			for (const savedCheckedSuccescriterium of savedCheckedSuccescriteria) {
 				// the saved check found in the db, is not selected in the form by the client
 				// so it should be disconnected from the db
 				if (!clientCheckedSuccesscriteria.find((obj) => obj === savedCheckedSuccescriterium.id)) {
 					console.log(savedCheckedSuccescriterium.id + ' is being removed...');
-					deleteCheckFromList(savedCheckedSuccescriterium.id);
+					await deleteCheckFromList(savedCheckedSuccescriterium.id);
 				}
-			});
+			}
 		} else {
 			// there are none checked inputs AND none are in the db connected
 			if (savedCheckedSuccescriteria == 0) {
@@ -87,9 +88,9 @@ export const actions = {
 				console.log('all checks are being removed...');
 				// in case there is one or more checks in the db AND none are checked by the client
 				// disconnect these from the db
-				savedCheckedSuccescriteria.forEach((savedCheckedSuccescriterium) => {
-					deleteCheckFromList(savedCheckedSuccescriterium.id);
-				});
+				for (const savedCheckedSuccescriterium of savedCheckedSuccescriteria) {
+					await deleteCheckFromList(savedCheckedSuccescriterium.id);
+				}
 			}
 		}
 		console.log('===================');
@@ -149,7 +150,6 @@ export const actions = {
 
 				let firstCheckId = firstCheckResponse.website.urls[0].checks[0].id;
 
-				// console.log("id: " + firstCheckId)
 				return {
 					firstCheckId,
 					success: true
@@ -161,44 +161,6 @@ export const actions = {
 			}
 		}
 
-		return { success: true }
-
-		// toolboardData.principe.richtlijnen.forEach(richtlijn => {
-		// 	allSuccescriteria.push(richtlijn.succescriteria.filter((obj) => obj.niveau == niveau))
-		// 	// richtlijn.succescriteria.forEach(succescriterium => {
-		// 	// 	allSuccescriteria.push(succescriterium.filter((obj) => obj.niveau == niveau))
-		// 	// })
-		// })
-		// // console.log(allSuccescriteria.flat(Infinity))
-
-		// // loop through all succescriteria that are presented in the current form
-		// allSuccescriteria.flat(Infinity).forEach(allSuccescriterium => {
-		// 	// does the db checks list already contain the checked box
-		// 	if (checkedSuccescriteria.find((obj) => obj.id === allSuccescriterium.id)) {
-		// 		allCheckedSuccesscriteria.forEach(allCheckedSuccesscriterium => {
-		// 			if (checkedSuccescriteria.find((obj) => obj.id === allCheckedSuccesscriterium)) {
-		// 				console.log(allCheckedSuccesscriterium + " ok on")
-		// 			} else {
-		// 				console.log(allCheckedSuccesscriterium + " will be added")
-		// 			}
-		// 		})
-		// 	}
-		// 	if (checkedSuccescriteria.find((obj) => obj.id) !== allSuccescriterium.id) {
-		// 		console.log(allSuccescriterium.id + " ok false")
-		// 	}
-		// })
-
-		// console.log(allSuccescriteria)
-
-		// allCheckedSuccesscriteria.forEach(allCheckedSuccesscriterium => {
-		// 	if (checkedSuccescriteria.find((obj) => obj.id === allCheckedSuccesscriterium)) {
-		// 		//this succescriterium is already in the checks list of this project
-		// 		console.log(allCheckedSuccesscriterium + " yes")
-		// 	} else {
-		// 		//this succescriterium is not yet in the checks list of this project
-		// 		// console.log(allCheckedSuccesscriterium + " no")
-		// 		console.log(allCheckedSuccesscriterium + " is being added to the checks list")
-		// 	}
-		// })
+		return { success: true };
 	}
 };

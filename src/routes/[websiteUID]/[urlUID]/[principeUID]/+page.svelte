@@ -40,12 +40,12 @@
 		right: 1rem;
 		height: 4rem;
 		width: 10rem;
-		background-color: #a0004025;
+		background-color: #22ff0025;
 		backdrop-filter: blur(3px);
-		border: 1px solid var(--c-pink);
+		border: 1px solid #22ff00;
 		border-radius: 4px;
 		padding: .5rem;
-		text-shadow: 0px 0px 10px black;
+		text-shadow: 0px 0px 5px black;
 		animation: fade-out 4s forwards;
 		z-index: 2;
 	}

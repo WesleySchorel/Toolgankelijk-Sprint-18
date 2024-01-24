@@ -6,6 +6,10 @@
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
 
+	import loadingIcon from '$lib/assets/loading.svg';
+
+	let loading = false;
+
 	// console.log(toolboardData)
 
 	const getSuccescriteriaByNiveau = (niveau) =>
@@ -28,6 +32,15 @@
 		console.log(niveauToggle);
 		niveauToggle.classList.toggle('disabled');
 	});
+
+	// const updateChecklist = () => {
+	// 	loading = true;
+	// 	return async ({ update }) => {
+	// 		loading = false;
+	// 		console.log(loading);
+	// 		await update();
+	// 	};
+	// };
 </script>
 
 <section>
@@ -46,8 +59,11 @@
 		method="POST"
 		action="?/updateChecklist"
 		use:enhance={() => {
-			// prevent the form to be reset
-			return ({ update }) => update({ reset: false });
+			loading = true;
+			return async ({ update }) => {
+				loading = false;
+				update({ reset: false });
+			};
 		}}
 	>
 		<input type="hidden" name="niveau" value={selectedNiveau} />
@@ -81,12 +97,18 @@
 				{/each}
 			</article>
 		{/each}
-		<button>Opslaan</button>
+		{#if loading}
+			<div class="submit">
+				<img src={loadingIcon} alt="" height="32" width="32" />
+			</div>
+		{:else}
+			<button class="submit"> Opslaan </button>
+		{/if}
 	</form>
 </section>
 
 <style>
-	button {
+	.submit {
 		position: fixed;
 		bottom: 1rem;
 		right: 1rem;
@@ -99,11 +121,21 @@
 		border-radius: 4px;
 		cursor: pointer;
 	}
-	button:hover {
+	.submit:hover {
 		filter: saturate(1.2);
 	}
 	button:active {
 		filter: saturate(1) brightness(0.9);
+	}
+	.submit:not(button) {
+		cursor: auto;
+		background-color: #a0004025;
+		backdrop-filter: blur(3px);
+		border: 1px solid var(--c-pink);
+		border-radius: 4px;
+	}
+	.submit img {
+		animation: 0.8s rotate infinite;
 	}
 	select {
 		border-radius: 0.25em;
@@ -232,5 +264,14 @@
 
 	#niveau-toggle {
 		margin-bottom: 1em;
+	}
+
+	@keyframes rotate {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
 	}
 </style>
