@@ -97,18 +97,20 @@
 				{/each}
 			</article>
 		{/each}
-		<button>
-			{#if loading}
-				<img src={loadingIcon} alt="" height="32" width="32" />
-			{:else}
-				Opslaan
-			{/if}
+		{#if loading}
+		<div class="submit">
+			<img src={loadingIcon} alt="" height="32" width="32" />
+		</div>
+		{:else}
+		<button class="submit">
+			Opslaan
 		</button>
+			{/if}
 	</form>
 </section>
 
 <style>
-	button {
+	.submit {
 		position: fixed;
 		bottom: 1rem;
 		right: 1rem;
@@ -121,13 +123,19 @@
 		border-radius: 4px;
 		cursor: pointer;
 	}
-	button:hover {
+	.submit:hover {
 		filter: saturate(1.2);
 	}
 	button:active {
 		filter: saturate(1) brightness(0.9);
 	}
-	button img {
+	.submit:not(button) {
+		background-color: #a0004025;
+		backdrop-filter: blur(3px);
+		border: 1px solid var(--c-pink);
+		border-radius: 4px;
+	}
+	.submit img {
 		animation: 1s rotate infinite;
 	}
 	select {
