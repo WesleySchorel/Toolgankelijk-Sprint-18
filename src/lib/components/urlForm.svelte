@@ -1,3 +1,8 @@
+<script>
+	export let params;
+	console.log("Dit is " + params);
+</script>
+
 <section class="form-container">
     <h2>Url toevoegen</h2>
     <form method="POST" action="?/addUrl">
@@ -6,6 +11,7 @@
 
         <label for="url" class="url-label">Pagina url</label>
         <input id="url" name="url" required type="url" />
+		<input id="slug" name="slug" type="name" value="{params}">
         <button class="add-button">Toevoegen</button>
     </form>
 </section>
@@ -36,6 +42,10 @@
 
 	form {
 		margin-top: 1em;
+	}
+
+	#slug {
+		display: none;
 	}
 
 	.add-button {

@@ -41,7 +41,7 @@
 	<div class="toast"><p>{form?.message}</p></div>
 {/if}
 
-<dialog><UrlForm /></dialog>
+<dialog><UrlForm {params}/></dialog>
 
 <ul>
 	{#each websites as website}

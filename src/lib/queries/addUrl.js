@@ -1,8 +1,8 @@
-export default function getQueryAddUrl(gql, name, formUrl, partnerSlug) {
+export default function getQueryAddUrl(gql, name, formUrl, formSlug) {
 	return gql`
     mutation {
         createUrl(
-          data: {url: "${formUrl}", slug: "${name}", website: {connect: {slug: "${partnerSlug}"}}}
+          data: {url: "${formUrl}", slug: "${name}", website: {connect: {slug: "${formSlug}"}}}
         ) {
           id
         }

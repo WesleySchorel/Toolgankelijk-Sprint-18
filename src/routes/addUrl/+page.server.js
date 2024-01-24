@@ -9,21 +9,22 @@ import getQueryAddUrl from '$lib/queries/addUrl'
 
 // the actions export is unique to sveltekit
 export const actions = {  
-  default: async ({ url, 
+  addUrl: async ({ url, 
     request
   }) => {
 
     // get url partner value (slug)
-    let partnerSlug = url.searchParams.get('partner')
+    // let partnerSlug = url.searchParams.get('partner')
 
     const formData = await request.formData();
     const name = formData.get('name')
     const formUrl = formData.get('url');
+    const formSlug = formData.get('slug');
 
-    console.log(name, formUrl, partnerSlug)
+    console.log(name, formUrl, formSlug)
 
     try {
-      let query = getQueryAddUrl(gql, name, formUrl, partnerSlug)
+      let query = getQueryAddUrl(gql, name, formUrl, formSlug)
       let hygraphCall = await hygraph.request(query)
 
       return {

@@ -51,20 +51,21 @@ export const actions = {
 
     addUrl: async ({
         url,
-        request
+        request,
     }) => {
 
         // get url partner value (slug)
         let partnerSlug = url.searchParams.get('partner')
-
+    
         const formData = await request.formData();
         const name = formData.get('name')
         const formUrl = formData.get('url');
+        const formSlug = formData.get('slug');
 
-        console.log(name, formUrl, partnerSlug)
+        console.log(formSlug)
 
         try {
-            let query = getQueryAddUrl(gql, name, formUrl, partnerSlug)
+            let query = getQueryAddUrl(gql, name, formUrl, formSlug)
             let hygraphCall = await hygraph.request(query)
 
             return {
