@@ -1,16 +1,19 @@
 <script>
-	import PartnerForm from '../../lib/components/partnerForm.svelte';
-
+	import UrlForm from "../../../lib/components/urlForm.svelte";
+	import { page } from '$app/stores';
+	
 	export let form;
+
+	const params = $page.params.websiteUID;
 </script>
 
 <section class="content-container">
 	<article class="tip-container">
 		<p class="tip">Tip</p>
-		<p>Probeer een partner toe te voegen die nog niet in de lijst bestaat!</p>
+		<p>Voeg een bestaande url toe van de website van een partner!</p>
 	</article>
 
-	<PartnerForm />
+	<UrlForm {params} />
 </section>
 
 {#if form?.success}
@@ -86,4 +89,3 @@
 		}
 	}
 </style>
-
