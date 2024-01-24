@@ -23,7 +23,7 @@
 </script>
 
 <li class="website" class:container-off={containerOff}>
-	<a href={website.slug}>
+	<a href="{website.slug}?partner={website.slug}">
 		<section class="logo-partner-section">
 			<div>
 				<img height="60" src="{faviconAPI}{website.homepage}/&size=128" alt="" />
