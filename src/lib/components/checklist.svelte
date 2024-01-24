@@ -6,6 +6,8 @@
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
 
+	import loadingIcon from '$lib/assets/loading.svg'
+
 	let loading = false;
 
 	// console.log(toolboardData)
@@ -97,7 +99,7 @@
 		{/each}
 		<button>
 			{#if loading}
-				Loading...
+				<img src={loadingIcon} alt="" height="32" width="32" />
 			{:else}
 				Opslaan
 			{/if}
@@ -124,6 +126,9 @@
 	}
 	button:active {
 		filter: saturate(1) brightness(0.9);
+	}
+	button img {
+		animation: 1s rotate infinite;
 	}
 	select {
 		border-radius: 0.25em;
@@ -251,5 +256,14 @@
 
 	#niveau-toggle {
 		margin-bottom: 1em;
+	}
+
+	@keyframes rotate {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
 	}
 </style>
