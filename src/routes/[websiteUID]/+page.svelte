@@ -31,7 +31,7 @@
 <Heading {heading} />
 
 <section>
-	<a href="/addUrl?partner={params}" on:click={openDialog}>Project toevoegen</a>
+	<a href="/{params}/addUrl" on:click={openDialog}>Project toevoegen</a>
 	<Search />
 </section>
 

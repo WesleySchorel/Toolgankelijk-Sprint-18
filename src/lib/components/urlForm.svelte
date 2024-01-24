@@ -1,7 +1,6 @@
 <script>
 	export let params;
-	console.log("Dit is " + params);
-</script>
+	</script>
 
 <section class="form-container">
     <h2>Url toevoegen</h2>

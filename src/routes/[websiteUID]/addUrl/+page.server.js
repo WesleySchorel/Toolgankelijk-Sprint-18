@@ -6,6 +6,19 @@ import {
 } from '$lib/utils/hygraph.js'
 
 import getQueryAddUrl from '$lib/queries/addUrl'
+import getQueryWebsite from '$lib/queries/website';
+
+export async function load({
+  params
+}) {
+  const {
+      websiteUID
+  } = params;
+  let query = getQueryWebsite(gql, websiteUID);
+
+  return await hygraph.request(query).websitesData;
+}
+
 
 // the actions export is unique to sveltekit
 export const actions = {  
@@ -35,7 +48,7 @@ export const actions = {
     } catch (error) {
 
       return {
-        message: 'Er ging wat mis, probeer het opnieuw.',
+        message: error + 'Er ging wat mis, probeer het opnieuw.',
         success: false
       }
     }

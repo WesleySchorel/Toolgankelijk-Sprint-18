@@ -1,7 +1,10 @@
 <script>
-	import UrlForm from "../../lib/components/urlForm.svelte";
-
+	import UrlForm from "../../../lib/components/urlForm.svelte";
+	import { page } from '$app/stores';
+	
 	export let form;
+
+	const params = $page.params.websiteUID;
 </script>
 
 <section class="content-container">
@@ -10,7 +13,7 @@
 		<p>Voeg een bestaande url toe van de website van een partner!</p>
 	</article>
 
-	<UrlForm />
+	<UrlForm {params} />
 </section>
 
 {#if form?.success}
