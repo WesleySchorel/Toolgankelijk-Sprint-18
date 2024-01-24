@@ -1,13 +1,17 @@
 <script>
 	import Heading from '$lib/components/heading.svelte';
-	import { page } from '$app/stores' ;
+	import { page } from '$app/stores';
 
 	export let data;
 
-	console.log(data)
+	console.log(data);
 
-    $: heading = {titel: data.websitesData.website.titel, homepage: data.urlData.url.url, url: data.urlData.url.slug}
-	const principes = data.principesData.principes
+	$: heading = {
+		titel: data.websitesData.website.titel,
+		homepage: data.urlData.url.url,
+		url: data.urlData.url.slug
+	};
+	const principes = data.principesData.principes;
 </script>
 
 <Heading {heading} />
@@ -50,31 +54,30 @@
 <section class="container-principes">
 	<ul>
 		{#each principes as principe (principe.index)}
-		<li>
-			<a href="{$page.url.pathname}/{principe.slug}">
-				<div class="principe">
-					<h3><span>{principe.titel}. </span> Principe {principe.index}</h3>
-					<p>
-						{principe.beschrijving.text}
-					</p>
-					<div class="progress-container">
-						<progress id="progress-partner" max="100" value="70" />
-						<label class="progress-percentage" for="progress-partner">70%</label>
+			<li>
+				<a href="{$page.url.pathname}/{principe.slug}">
+					<div class="principe">
+						<h3><span>{principe.titel}. </span> Principe {principe.index}</h3>
+						<p>
+							{principe.beschrijving.text}
+						</p>
+						<div class="progress-container">
+							<progress id="progress-partner" max="100" value="70" />
+							<label class="progress-percentage" for="progress-partner">70%</label>
+						</div>
 					</div>
-				</div>
-			</a>
-		</li>
+				</a>
+			</li>
 		{/each}
 	</ul>
 </section>
 
 <style>
-
 	:global(*) {
 		box-sizing: border-box;
 	}
 
-    /* VOORTGANG
+	/* VOORTGANG
 	.container-voortgang-1 {
 		background-color: var(--c-container);
 		padding: 1em 1em;
@@ -114,7 +117,7 @@
 		color: inherit;
 	}
 
-    /* VOORTGANG PRESTATIES */
+	/* VOORTGANG PRESTATIES */
 	/* .goed-bezig {
 		color: var(--c-green);
 		font-size: 1.25em;
@@ -125,16 +128,14 @@
 		font-size: 1.25em;
 	} */
 
-
-
-    /* PRINCIPES */
+	/* PRINCIPES */
 
 	h3 {
 		font-size: 1.5em;
-		margin-bottom: .25em;
+		margin-bottom: 0.25em;
 	}
 
-    .container-principes ul {
+	.container-principes ul {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(40em, 1fr));
 		gap: 1em;
@@ -144,7 +145,7 @@
 		margin-bottom: 1em;
 	}
 
-	.container-principes  li {
+	.container-principes li {
 		border-radius: 0.5em;
 		border: solid 1px transparent;
 	}
@@ -160,7 +161,7 @@
 	.principe p {
 		font-size: 1em;
 		margin-bottom: 3rem;
-        width: 80%;
+		width: 80%;
 	}
 
 	.principe {
@@ -181,7 +182,7 @@
 		justify-content: space-between;
 		align-items: flex-end;
 		gap: 1em;
-    	margin-top: 0.25em;
+		margin-top: 0.25em;
 	}
 
 	/* progress */

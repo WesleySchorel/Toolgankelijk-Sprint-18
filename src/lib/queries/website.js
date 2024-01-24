@@ -16,6 +16,15 @@ export default function getQueryWebsite(gql, slug) {
 					}
 				}
 			}
+			principes {
+				titel
+				richtlijnen {
+					titel
+					succescriteria(first: 200) {
+						id
+					}
+				}
+			}
 		}
 	`;
 }

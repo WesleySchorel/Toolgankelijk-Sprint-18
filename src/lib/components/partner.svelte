@@ -30,12 +30,13 @@
 			return total;
 		}, 0);
 
-		const totaalCriteria = principes.reduce((total, principe) => {
-			principe.richtlijnen.forEach((richtlijn) => {
-				total += richtlijn.succescriteria.length;
-			});
-			return total;
-		}, 0);
+		const totaalCriteria =
+			principes.reduce((total, principe) => {
+				principe.richtlijnen.forEach((richtlijn) => {
+					total += richtlijn.succescriteria.length;
+				});
+				return total;
+			}, 0) * website.urls.length; // Multiply totaalcriteria by the number of URLs
 
 		const percentage = Math.round((websiteCriteria / totaalCriteria) * 100);
 
@@ -43,6 +44,8 @@
 		progressbar.max = totaalCriteria;
 
 		labelValue.innerHTML = `${percentage}%`;
+
+		$: document.querySelector(`#icons-${website.id}`).style.display = 'flex';
 	});
 
 	const faviconAPI =

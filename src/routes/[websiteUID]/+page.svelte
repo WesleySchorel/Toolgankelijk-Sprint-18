@@ -7,6 +7,7 @@
 	import UrlForm from '$lib/components/urlForm.svelte';
 
 	export let data;
+	const principes = data.partnersData.principes;
 
 	$: heading = {
 		titel: data.websitesData.website.titel,
@@ -41,22 +42,22 @@
 	<div class="toast"><p>{form?.message}</p></div>
 {/if}
 
-<dialog><UrlForm {params}/></dialog>
+<dialog><UrlForm {params} /></dialog>
 
 <ul>
 	{#each websites as website}
-		<Websites {website} {overzicht} {params} />
+		<Websites {website} {overzicht} {params} {principes} />
 	{/each}
 </ul>
 
 <style>
-	section{
+	section {
 		display: flex;
 		justify-content: space-between;
 		margin: 0 0 1em 1em;
 	}
 
-	a{
+	a {
 		border-radius: 0.25em;
 		padding: 0.5em 1em;
 		color: var(--c-white);

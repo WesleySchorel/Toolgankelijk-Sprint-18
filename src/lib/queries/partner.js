@@ -20,7 +20,7 @@ export default function getQueryPartner(gql) {
 				titel
 				richtlijnen {
 					titel
-					succescriteria(first: 100) {
+					succescriteria(first: 200) {
 						id
 					}
 				}
