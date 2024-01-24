@@ -1,6 +1,6 @@
 <section class="form-container">
     <h2>Url toevoegen</h2>
-    <form method="POST">
+    <form method="POST" action="?/addUrl">
         <label for="name">Pagina titel</label>
         <input id="name" name="name" required type="text" />
 
