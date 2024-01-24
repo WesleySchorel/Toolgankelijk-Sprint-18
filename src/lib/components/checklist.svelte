@@ -6,7 +6,7 @@
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
 
-	import loadingIcon from '$lib/assets/loading.svg'
+	import loadingIcon from '$lib/assets/loading.svg';
 
 	let loading = false;
 
@@ -98,14 +98,12 @@
 			</article>
 		{/each}
 		{#if loading}
-		<div class="submit">
-			<img src={loadingIcon} alt="" height="32" width="32" />
-		</div>
+			<div class="submit">
+				<img src={loadingIcon} alt="" height="32" width="32" />
+			</div>
 		{:else}
-		<button class="submit">
-			Opslaan
-		</button>
-			{/if}
+			<button class="submit"> Opslaan </button>
+		{/if}
 	</form>
 </section>
 
@@ -130,13 +128,14 @@
 		filter: saturate(1) brightness(0.9);
 	}
 	.submit:not(button) {
+		cursor: auto;
 		background-color: #a0004025;
 		backdrop-filter: blur(3px);
 		border: 1px solid var(--c-pink);
 		border-radius: 4px;
 	}
 	.submit img {
-		animation: 1s rotate infinite;
+		animation: 0.8s rotate infinite;
 	}
 	select {
 		border-radius: 0.25em;
