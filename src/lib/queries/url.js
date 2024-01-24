@@ -5,6 +5,7 @@ export default function getQueryUrl(gql, slug) {
       id
       url
       slug
+      updatedAt
       website {
         slug
       }

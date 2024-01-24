@@ -1,46 +1,83 @@
-import { gql } from 'graphql-request'
-import { hygraph } from '$lib/utils/hygraph.js'
+import {
+    gql
+} from 'graphql-request';
+import {
+    hygraph
+} from '$lib/utils/hygraph.js';
 
-import getQueryWebsite from '$lib/queries/website'
 import getQueryAddUrl from '$lib/queries/addUrl'
+import getQueryWebsite from '$lib/queries/website';
+import getQueryDeleteUrl from '$lib/queries/deleteUrl';
+import getQueryUpdateUrl from '$lib/queries/updateUrl';
 
-export async function load({params}) {
-    const { websiteUID } = params;
-    let query = getQueryWebsite(gql, websiteUID)
-    
-    return await hygraph.request(query).websitesData
+export async function load({
+    params
+}) {
+    const {
+        websiteUID
+    } = params;
+    let query = getQueryWebsite(gql, websiteUID);
+
+    return await hygraph.request(query).websitesData;
 }
 
 // the actions export is unique to sveltekit
-export const actions = {  
-  default: async ({ url, 
-    request
-  }) => {
+export const actions = {
 
-    // get url partner value (slug)
-    let partnerSlug = url.searchParams.get('partner')
+    deletePost: async ({
+        request
+    }) => {
+        const formData = await request.formData();
+        const id = formData.get('id');
 
-    const formData = await request.formData();
-    const name = formData.get('name')
-    const formUrl = formData.get('url');
+        // console.log(id);
 
-    console.log(name, formUrl, partnerSlug)
+        let query = getQueryDeleteUrl(gql, id);
+        return await hygraph.request(query);
+    },
+    editPost: async ({
+        request
+    }) => {
+        const formData = await request.formData();
+        const id = formData.get('id');
+        const slug = formData.get('slug');
+        const url = formData.get('url');
 
-    try {
-      let query = getQueryAddUrl(gql, name, formUrl, partnerSlug)
-      let hygraphCall = await hygraph.request(query)
+        // console.log(id, slug, url);
 
-      return {
-        hygraphCall,
-        success: true,
-        message: name + ' is toegevoegd.'
-      }
-    } catch (error) {
+        let query = getQueryUpdateUrl(gql, slug, url, id);
+        return await hygraph.request(query);
+    },
 
-      return {
-        message: 'Er ging wat mis, probeer het opnieuw.',
-        success: false
-      }
-    }
-  },
+    addUrl: async ({
+        url,
+        request
+    }) => {
+
+        // get url partner value (slug)
+        let partnerSlug = url.searchParams.get('partner')
+
+        const formData = await request.formData();
+        const name = formData.get('name')
+        const formUrl = formData.get('url');
+
+        console.log(name, formUrl, partnerSlug)
+
+        try {
+            let query = getQueryAddUrl(gql, name, formUrl, partnerSlug)
+            let hygraphCall = await hygraph.request(query)
+
+            return {
+                hygraphCall,
+                success: true,
+                message: name + ' is toegevoegd.'
+            }
+        } catch (error) {
+
+            return {
+                message: 'Er ging wat mis, probeer het opnieuw.',
+                success: false
+            }
+        }
+    },
 };

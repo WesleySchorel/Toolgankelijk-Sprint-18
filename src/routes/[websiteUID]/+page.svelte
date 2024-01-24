@@ -77,7 +77,7 @@
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
 		gap: 1em;
-
+		/* position: relative; */
 		list-style-type: none;
 		margin: 0 1em;
 	}

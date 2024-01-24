@@ -3,7 +3,7 @@
 
 <section class="form-container">
 	<h2>Partner toevoegen</h2>
-	<form method="POST">
+	<form method="POST" action="?/addPartner">
 		<label for="name">Partner titel</label>
 		<input id="name" name="name" required type="text" />
 
