@@ -46,7 +46,7 @@
 <section>
 	<div id="niveau-toggle" class="disabled">
 		<label>
-			Selecteer niveau:
+			Selecteer niveau
 			<select bind:value={selectedNiveau} on:change={handleNiveauChange}>
 				<option value="A">Niveau A</option>
 				<option value="AA">Niveau AA</option>

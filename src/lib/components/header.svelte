@@ -1,7 +1,7 @@
 <script>
 	import logo from "$lib/assets/vervoerregio_amsterdam_logo.svg";
 	import informationIcon from "$lib/assets/information_icon.svg";
-	import darkmodeIcon from "$lib/assets/dark_mode_icon.svg";
+	// import darkmodeIcon from "$lib/assets/dark_mode_icon.svg";
 	import BreadCrumbs from '$lib/components/bread-crumbs.svelte';
 
 	export let params;
@@ -22,13 +22,13 @@
 					alt="information icon"
 				/>
 			</a>
-			<a href="/info">
+			<!-- <a href="/info">
 				<img
 					class="information-icon-img"
 					src={darkmodeIcon}
 					alt="information icon"
 				/>
-			</a>
+			</a> -->
 		</div>
 	</nav>
 </header>

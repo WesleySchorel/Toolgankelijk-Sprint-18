@@ -21,7 +21,7 @@
 
 <section>
 	<a href="/addPartner" on:click={openDialog}>Partner toevoegen</a>
-	<Search />
+	<Search placeholderProp="Gvb"/>
 </section>
 
 {#if form?.success}

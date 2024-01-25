@@ -3,6 +3,8 @@
 	let input;
 	import { onMount } from 'svelte';
 
+	export let placeholderProp;
+
 	onMount(() => {
 		// Your client-side code to run after the component is mounted
 		document.querySelector('form').classList.remove('form-off');
@@ -23,8 +25,8 @@
 </script>
 
 <form class="form-off" on:input={submitPartner}>
-	<label for="partner-search">Partner of url zoeken:</label>
-	<input type="search" id="partner-search" placeholder="Zoeken" bind:value={input} />
+	<label for="partner-search">Zoeken</label>
+	<input type="search" id="partner-search" placeholder={placeholderProp} bind:value={input} />
 </form>
 
 <style>

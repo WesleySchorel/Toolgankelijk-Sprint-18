@@ -191,7 +191,7 @@
 	}
 
 	a section button:first-child {
-		margin-right: 5px;
+		margin-right: 0.6em
 	}
 
 	.more-info-section {
