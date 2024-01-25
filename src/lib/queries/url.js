@@ -10,8 +10,9 @@ export default function getQueryUrl(gql, slug) {
 					slug
 				}
 				checks {
-					succescriteria {
+					succescriteria(first: 200) {
 						id
+						index
 					}
 				}
 			}
