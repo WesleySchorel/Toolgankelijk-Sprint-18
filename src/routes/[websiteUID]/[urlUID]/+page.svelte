@@ -136,7 +136,7 @@
 
     .container-principes ul {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(40em, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(clamp(17rem, 40vw, 40rem), 1fr));
 		gap: 1em;
 
 		list-style-type: none;
