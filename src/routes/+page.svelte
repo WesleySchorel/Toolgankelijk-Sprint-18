@@ -6,6 +6,7 @@
 	export let data;
 
 	let heading = { titel: 'Partners overzicht' };
+	const principes = data.principes;
 
 	export let form;
 
@@ -15,6 +16,8 @@
 		dialog.showModal();
 		el.preventDefault();
 	}
+
+	// console.log(principes);
 </script>
 
 <Heading {heading} />
@@ -34,7 +37,7 @@
 
 <ul>
 	{#each data.websites as website}
-		<Partner {website} />
+		<Partner {website} {principes} />
 	{/each}
 </ul>
 

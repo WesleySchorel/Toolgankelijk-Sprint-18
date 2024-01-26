@@ -1,80 +1,80 @@
 <script>
 	import Heading from '$lib/components/heading.svelte';
-	import { page } from '$app/stores' ;
+	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
 
 	export let data;
 
-	console.log(data)
+	const principes = data.principesData.principes;
 
-    $: heading = {titel: data.websitesData.website.titel, homepage: data.urlData.url.url, url: data.urlData.url.slug}
-	const principes = data.principesData.principes
+	$: heading = {
+		titel: data.websitesData.website.titel,
+		homepage: data.urlData.url.url,
+		url: data.urlData.url.slug
+	};
+
+	let successCriteriaMap = {};
+	let criteriaPerPrincipe = {};
+
+	onMount(() => {
+		const criteriaSlice = data.urlData.url.checks.flatMap((check) =>
+			check.succescriteria.map((criteria) => criteria.index)
+		);
+
+		criteriaSlice.forEach((index) => {
+			const principleIndex = index.split('.')[0];
+			if (!successCriteriaMap[principleIndex]) {
+				successCriteriaMap[principleIndex] = [];
+			}
+			successCriteriaMap[principleIndex].push(index);
+		});
+
+		principes.forEach((principe) => {
+			criteriaPerPrincipe[principe.index] = principe.richtlijnen.reduce(
+				(total, richtlijn) => total + richtlijn.succescriteria.length,
+				0
+			);
+		});
+	});
 </script>
 
 <Heading {heading} />
-<!-- <section class="container-voortgang-1">
-	<div class="container-voortgang-2">
-		<ul>
-			<li>
-				<section>
-					<div>
-						<span class="goed-bezig">Goed bezig!</span>
-						<p>Je hebt al grote stappen gemaakt met principe Begrijpelijk!</p>
-					</div>
-				</section> 
-			</li>
-			<li>
-				<section>
-					<div>
-						<span class="tip">Tip</span>
-						<p>
-							Kijk ook eens naar succescriteria 1.5.2. Deze is namelijk eenvoudig toe te passen!
-						</p>
-					</div>
-				</section>
-			</li>
-			<li>
-				<section>
-					<div>
-						<span class="tip">Tip</span>
-						<p>
-							Succescriteria 1.2.3 zal de toegankelijkheid op je website sterk verbeteren door het
-							contrast gebruik.
-						</p>
-					</div>
-				</section>
-			</li>
-		</ul>
-	</div>
-</section> -->
 
 <section class="container-principes">
 	<ul>
 		{#each principes as principe (principe.index)}
-		<li>
-			<a href="{$page.url.pathname}/{principe.slug}">
-				<div class="principe">
-					<h3><span>{principe.titel}. </span> Principe {principe.index}</h3>
-					<p>
-						{principe.beschrijving.text}
-					</p>
-					<div class="progress-container">
-						<progress id="progress-partner" max="100" value="70" />
-						<label class="progress-percentage" for="progress-partner">70%</label>
+			<li>
+				<a href="{$page.url.pathname}/{principe.slug}">
+					<div class="principe">
+						<h3><span>{principe.titel}. </span> Principe {principe.index}</h3>
+						<p>{principe.beschrijving.text}</p>
+						<div class="progress-container">
+							<progress
+								id="progress-partner"
+								max={criteriaPerPrincipe[principe.index] || 100}
+								value={successCriteriaMap[principe.index]?.length || 0}
+							/>
+							<label class="progress-percentage" for="progress-partner">
+								{(
+									((successCriteriaMap[principe.index]?.length || 0) /
+										(criteriaPerPrincipe[principe.index] || 100)) *
+									100
+								).toFixed(0)}%
+							</label>
+						</div>
 					</div>
-				</div>
-			</a>
-		</li>
+				</a>
+			</li>
 		{/each}
 	</ul>
 </section>
 
 <style>
-
 	:global(*) {
 		box-sizing: border-box;
 	}
 
-    /* VOORTGANG
+	/* VOORTGANG
 	.container-voortgang-1 {
 		background-color: var(--c-container);
 		padding: 1em 1em;
@@ -114,7 +114,7 @@
 		color: inherit;
 	}
 
-    /* VOORTGANG PRESTATIES */
+	/* VOORTGANG PRESTATIES */
 	/* .goed-bezig {
 		color: var(--c-green);
 		font-size: 1.25em;
@@ -125,16 +125,14 @@
 		font-size: 1.25em;
 	} */
 
-
-
-    /* PRINCIPES */
+	/* PRINCIPES */
 
 	h3 {
 		font-size: 1.5em;
-		margin-bottom: .25em;
+		margin-bottom: 0.25em;
 	}
 
-    .container-principes ul {
+	.container-principes ul {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(clamp(17rem, 40vw, 40rem), 1fr));
 		gap: 1em;
@@ -144,7 +142,7 @@
 		margin-bottom: 1em;
 	}
 
-	.container-principes  li {
+	.container-principes li {
 		border-radius: 0.5em;
 		border: solid 1px transparent;
 	}
@@ -160,7 +158,7 @@
 	.principe p {
 		font-size: 1em;
 		margin-bottom: 3rem;
-        width: 80%;
+		width: 80%;
 	}
 
 	.principe {
@@ -181,7 +179,7 @@
 		justify-content: space-between;
 		align-items: flex-end;
 		gap: 1em;
-    	margin-top: 0.25em;
+		margin-top: 0.25em;
 	}
 
 	/* progress */

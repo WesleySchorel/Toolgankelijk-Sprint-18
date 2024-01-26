@@ -1,7 +1,7 @@
 <script>
 	export let website;
 	export let form;
-
+	export let principes;
 	import { onMount } from 'svelte';
 
 	import trash from '$lib/assets/trash.svg';
@@ -12,21 +12,42 @@
 
 	let openedDelete = null;
 	let openedEdit = null;
+	let totalSuccessCriteria = 0;
 
 	const updatedTime = new Date(website.updatedAt);
 	const currentTime = new Date();
 	const timeDifference = Math.floor((currentTime - updatedTime) / (60 * 1000)); // Verschil in minuten
 	const lastTime = timeDifference > 0 ? `${timeDifference} min geleden` : 'Zojuist';
 
-	// runs after the component is first rendered to the DOM.
 	onMount(() => {
 		let random = Math.floor(Math.random() * 100);
+		progressbar.value = random; // Set initial value
 
-		progressbar.value = random;
-		labelValue.innerHTML = random + '%';
+		const websiteCriteria = website.urls.reduce((total, url) => {
+			url.checks.forEach((check) => {
+				total += check.succescriteria.length;
+			});
+			return total;
+		}, 0);
+
+		const totaalCriteria =
+			principes.reduce((total, principe) => {
+				principe.richtlijnen.forEach((richtlijn) => {
+					total += richtlijn.succescriteria.length;
+				});
+				return total;
+			}, 0) * website.urls.length; // Multiply totaalcriteria by the number of URLs
+
+		const percentage = Math.round((websiteCriteria / totaalCriteria) * 100);
+
+		progressbar.value = websiteCriteria;
+		progressbar.max = totaalCriteria;
+
+		labelValue.innerHTML = `${percentage}%`;
 
 		$: document.querySelector(`#icons-${website.id}`).style.display = 'flex';
 	});
+
 	const faviconAPI =
 		'https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=';
 
@@ -44,7 +65,6 @@
 		event.preventDefault();
 		openedDelete = null;
 		document.body.style.overflowY = 'scroll';
-
 	}
 
 	function openEdit(event) {

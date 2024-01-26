@@ -20,7 +20,7 @@ export default function getQueryToolboard(gql, slugUrl, principeSlug) {
           }
           richtlijnen {
             titel
-            succescriteria {
+            succescriteria(first: 200) {
               id
               titel
               index
@@ -42,6 +42,20 @@ export default function getQueryToolboard(gql, slugUrl, principeSlug) {
           id
           checklistItems {
             check
+          }
+          richtlijnen {
+            titel
+            succescriteria(first: 200) {
+              id
+              titel
+              index
+              niveau
+            }
+            index
+            slug
+            uitleg {
+              html
+            }
           }
           index
           slug

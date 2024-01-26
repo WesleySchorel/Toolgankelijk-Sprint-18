@@ -13,9 +13,9 @@
 		url: data.urlData.url.slug
 	};
 	const toolboardData = data.toolboardData;
+	const urlData = data.urlData;
 	const richtlijnen = toolboardData.principe.richtlijnen;
 	const principes = data.toolboardData.principes;
-	// console.log(richtlijnen);
 </script>
 
 <Heading {heading} />
@@ -24,7 +24,7 @@
 		<div class="toast"><p>Checklist is opgeslagen!</p></div>
 	{/if}
 	<Checklist {richtlijnen} {toolboardData} />
-	<Sidebar {principes} />
+	<Sidebar {principes} {urlData} />
 </section>
 
 <style>
@@ -44,7 +44,7 @@
 		backdrop-filter: blur(3px);
 		border: 1px solid #22ff00;
 		border-radius: 4px;
-		padding: .5rem;
+		padding: 0.5rem;
 		text-shadow: 0px 0px 5px black;
 		animation: fade-out 4s forwards;
 		z-index: 2;
